@@ -1,0 +1,102 @@
+<div id="ViewTimeline">
+  <div class="modal-dialog modal-lg" style="width: 1111px;">
+    <div class="modal-content animated fadeIn" *ngIf="event">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title text-uppercase">View Timeline</h4>
+      </div>
+      <div class="modal-body" style="background: #fff;" *ngIf="event">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <tbody>
+                  <tr>
+                    <th class="vertical-middle" width="45%">Event ID</th>
+                    <td>{{event.id}}</td>
+                  </tr>
+                  <tr>
+                    <th class="vertical-middle">Event Category</th>
+                    <td>{{event.details.category.name}}</td>
+                  </tr>
+                  <tr>
+                    <th class="vertical-middle">Event Type</th>
+                    <td>{{event.details.type.name}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="timelinez">
+              <div class="entryz">
+                <div class="titlez">
+                  <p class="m-t-sm">{{event.details.startDate | date:'d MMM'}}</p>
+                  <h3>{{event.details.startDate | date:'yyyy'}}</h3>
+                </div>
+                <div class="bodyz">
+                  <h3>{{event.details.title}} ({{getStatus(event.details.status)}})</h3>
+                  <p class="m-b-xxs">
+                    {{event.place.state.name}}, {{event.place.country.name}}
+                  </p>
+                  <p class="m-b-xxs">
+                    {{getSeverity(event.details.severity)}}
+                  </p>
+                  <p class="m-b-xxs">
+                    Associated Disasters: {{event.associatedEvent?.type?.name}}
+                  </p>
+                  <p class="m-b-xxs">
+                    <a data-toggle="collapse" (click)="hideMainSources=!hideMainSources"  class="text-underline">View Sources</a>  |
+                    <a [routerLink]="['/events/single',event.id]" class="text-underline">Edit</a>  |
+                    <a [routerLink]="['/events/details',event.id]" class="text-underline">View All Features</a>
+                  </p>
+                  <div  [hidden]="!hideMainSources" >
+                    Sources:
+                    <div *ngFor="let source of event.details.sources">
+                      <a href="{{source.url}}" target="_blank" class="text-underline">{{source.name}}</a>  |
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="entryz" *ngFor="let update of event.updates; let i = index">
+                <div class="titlez">
+                  <p class="m-t-sm">{{update.details.startDate | date:'d MMM'}}</p>
+                  <h3>{{update.details.startDate | date:'yyyy'}}</h3>
+                </div>
+                <div class="bodyz">
+                  <h3>{{update.details.title}} ({{getStatus(update.details.status)}})</h3>
+                  <p class="m-b-xxs">
+                    {{update.place.state.name}}, {{update.place.country.name}}
+                  </p>
+                  <p class="m-b-xxs">
+                    {{getSeverity(update.details.severity)}}
+                  </p>
+                  <p class="m-b-xxs">
+                    Associated Disasters: {{update.associatedEvent?.type?.name}}
+                  </p>
+                  <p class="m-b-xxs">
+                    <a data-toggle="collapse"  (click)="hideSources[i]=!hideSources[i]" class="text-underline">View Sources</a>  |
+                    <a [routerLink]="['/events/single',event.id,true,i]" class="text-underline">Edit</a>  |
+                    <a (click)="deleteEventUpdate(event.id,update)" class="text-underline">Delete</a>  |
+                    <a [routerLink]="['/events/details',event.id,i]" class="text-underline">View All Features</a>
+                  </p>
+                  <div  [hidden]="!hideSources[i]">
+                    Sources:
+                    <div *ngFor="let source of update.details.sources">
+                      <a href="{{source.url}}" target="_blank" class="text-underline">{{source.name}}</a>  |
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" [routerLink]="['/events']" class="btn btn-white pull-left" data-dismiss="modal">Back to list</button>
+      </div>
+    </div>
+  </div>
+</div>

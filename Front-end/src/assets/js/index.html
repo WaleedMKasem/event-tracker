@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Z2DATA | Dashboard</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <!-- Style -->
+    <link href="css/z2.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.png">
+
+</head>
+
+<body class="top-navigation">
+
+    <div id="wrapper">
+        <div id="page-wrapper" class="white-bg">
+        <div class="row border-bottom white-bg">
+        <nav class="navbar navbar-static-top container" role="navigation">
+            <div class="navbar-header">
+                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                    <i class="fa fa-reorder"></i>
+                </button>
+                <a href="#" class="navbar-brand"><img src="images/logo.png" class="img-responsive" alt="Z2DATA | Dashboard"></a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">Companies <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li>
+                        <a href="#">Products</a>
+                    </li>
+                    <li>
+                        <a href="#">Markets</a>
+                    </li>
+                    <li>
+                        <a href="#">Risk Manager </a>
+                    </li>
+                    <li>
+                        <a href="#">Reports</a>
+                    </li>
+                </ul>
+                <div class="navbar-header navbar-form-custom">
+                    <form role="search" class="form-inline" action="#">
+                        <div class="form-group">
+                            <input type="text" placeholder="Search for companies, parts, products etc.." class="form-control" name="top-search" id="top-search">
+                        </div>
+                        <button class="btn btn-info" type="submit">Search</button>
+                    </form>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info navuser" data-toggle="dropdown" href="#">
+                            <i class="fa fa-bell"></i>  <span class="label label-danger">8</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-envelope-o fa-fw"></i> You have 16 messages
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                        <span class="pull-right text-muted small">12 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="#">
+                                        <strong>See All Alerts</strong>
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                          <a href="#" class="dropdown-toggle navuser" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                             John Doe <span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu">
+                                <li><a href="#"><i class="fa fa-gear fa-fw"></i>  Settings</a></li>
+                                <li><a href="#"><i class="fa fa-sign-out fa-fw"></i>  Logout</a></li>
+                          </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav><!-- /Navbar -->
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="container">
+            <div class="row navpath">
+                <div class="col-sm-6 col-md-6 col-xs-6">
+                    <ul class="list-inline">
+                      <li><a href="#">Companies</a></li>
+                      <li>/ Texas Instruments</li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 col-md-6 col-xs-6">
+                     <a href="#" class="pull-right text-underline">Submit Ticket</a>
+                </div>
+            </div><!-- /Page Path -->
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="complogo">
+                        <p><img src="images/ti.jpg" class="img-responsive" alt="Texas Instruments"></p>
+                        <span>Texas Instruments Inc  | ti.com | $TXN</span>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <br>
+                    <p class="pull-right c-lert">
+                        <a type="button" class="btn btn-default">Follow</a>
+                        <a type="button" class="btn btn-info">Create Alert </a>
+                    </p>
+                </div>
+            </div><!-- /Companies Logo -->
+            <div class="row maintabs">
+                <div class="col-lg-12">
+                    <div class="panel blank-panel">
+                        <div class="panel-heading"> 
+                            <div class="panel-options">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#tab-1">Score Card</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-2">Financial</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-3">Product</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-4">Industry</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-5">Geography</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-6">Relationships</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-7">Supply Chain</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-8">Governance</a></li>   
+                                    <li class=""><a data-toggle="tab" href="#tab-9">Events</a></li>                                 
+                                    <li class=""><a data-toggle="tab" href="#tab-10">Profile</a></li>
+
+                                    <li class="dropdown pull-right pink-color">
+                                          <a href="#" class="dropdown-toggle navuser" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                             Export <span class="caret"></span>
+                                          </a>
+                                          <ul class="dropdown-menu">
+                                                <li><a href="#"><i class="fa fa-gear fa-fw"></i>  Settings</a></li>
+                                                <li><a href="#"><i class="fa fa-sign-out fa-fw"></i>  Logout</a></li>
+                                          </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title alert-success">
+                                                    <div class="pull-right m-t-sm">
+                                                        <span class="text-uppercase">Strong</span>
+                                                        <span class="h2">65</span>
+                                                        <span class="text-success h2"><i class="fa fa-play fa-rotate-270"></i></span>
+                                                    </div>
+                                                    <h2>COMPANY <br>SCORE</h2>
+                                                </div>
+                                            </div>
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <a href="#" class="pull-right font-bold">More</a>
+                                                    <h4>PROFILE</h4>
+                                                </div>
+                                                <div class="ibox-content">
+
+                                                    <div class="row m-b-lg">
+                                                        <div class="col-md-12 m-b-sm">
+                                                            <div class=" text-gray text-uppercase font-noraml">COMPANY NAME</div>
+                                                            <div class="no-margins h5 font-noraml">Texas Instruments Inc </div>
+                                                        </div>
+                                                        <div class="col-md-12 m-b-sm">
+                                                            <div class=" text-gray text-uppercase font-noraml">STATUS</div>
+                                                            <div class="no-margins h5 font-noraml">Public, NYSE, $TXN</div>
+                                                        </div>
+                                                        <div class="col-md-12 m-b-sm">
+                                                            <div class=" text-gray text-uppercase font-noraml">YEAR FOUNDED</div>
+                                                            <div class="no-margins h5 font-noraml">1976</div>
+                                                        </div>
+                                                        <div class="col-md-12 m-b-sm">
+                                                            <div class=" text-gray text-uppercase font-noraml">INDUSTRY</div>
+                                                            <div class="no-margins h5 font-noraml">Hardware</div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <a href="#" class="pull-right font-bold">More</a>
+                                                    <h4 class="text-uppercase">FINANCIAL METRICS</h4>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    <table class="table table-hover financial-metrics">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="scardtit">Profitabillity </span>
+                                                                <span class="h4 text-success">
+                                                                    <i class="fa fa-play fa-rotate-270"></i>
+                                                                </span>
+                                                            </td>
+                                                            <td><span class="btn btn-danger btn-lg btn-w-m text-uppercase pull-right">Weak</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="scardtit">Cash & Working Capital</span>
+                                                                <span class="h4 text-danger">
+                                                                    <i class="fa fa-play fa-rotate-90"></i>
+                                                                </span>
+                                                            </td>
+                                                            <td><span class="btn btn-dark btn-lg btn-w-m text-uppercase pull-right">Stable</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="scardtit">Debt & Equity</span>
+                                                                <span class="h4 text-danger">
+                                                                    <i class="fa fa-play fa-rotate-90"></i>
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="btn btn-dark btn-lg btn-w-m text-uppercase pull-right">Stable</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="scardtit">Efficiency</span>
+                                                                <span class="h4 text-danger">
+                                                                    <i class="fa fa-play fa-rotate-90"></i>
+                                                                </span>
+                                                            </td>
+                                                            <td><span class="btn btn-danger btn-lg btn-w-m text-uppercase pull-right">Weak</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="scardtit">Stock Analysis</span>
+                                                                <span class="h4 text-success">
+                                                                    <i class="fa fa-play fa-rotate-270"></i>
+                                                                </span>
+                                                            </td>
+                                                            <td><span class="btn btn-success btn-lg btn-w-m text-uppercase pull-right">Strong</span></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-5">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <a href="#" class="pull-right font-bold">More</a>
+                                                    <h4>METRICS</h4>
+                                                </div>
+                                                <div class="ibox-content">
+
+                                                    <div class="row m-b-lg">
+                                                        <div class="col-xs-4 col-sm-4 col-md-4 text-center m-b-lg">
+                                                            <h4 class="no-margins font-bold text-gray text-uppercase">MARKET CAP</h4>
+                                                            <div class="text-info h4 font-noraml">384B <span class="text-danger"><i class="fa fa-play fa-rotate-90"></i></span></div>
+                                                        </div>
+                                                        <div class="col-xs-4 col-sm-4 col-md-4 text-center m-b-lg">
+                                                            <h4 class="no-margins font-bold text-gray text-uppercase">ANNUAL REVENUE</h4>
+                                                            <div class="text-info h4 font-noraml">54B <span class="text-success"><i class="fa fa-play fa-rotate-270"></i></span></div>
+                                                        </div>
+                                                        <div class="col-xs-4 col-sm-4 col-md-4 text-center m-b-lg">
+                                                            <h4 class="no-margins font-bold text-gray text-uppercase">GROSS PROFIT</h4>
+                                                            <div class="text-info h4 font-noraml">300M <span class="text-success"><i class="fa fa-play fa-rotate-270"></i></span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row m-b-lg">
+                                                        <div class="col-xs-4 col-sm-4 col-md-4 text-center m-b-lg">
+                                                            <h4 class="no-margins font-bold text-gray text-uppercase">MARKET CAP</h4>
+                                                            <div class="text-info h4 font-noraml">384B <span class="text-danger"><i class="fa fa-play fa-rotate-90"></i></span></div>
+                                                        </div>
+                                                        <div class="col-xs-4 col-sm-4 col-md-4 text-center m-b-lg">
+                                                            <h4 class="no-margins font-bold text-gray text-uppercase">ANNUAL REVENUE</h4>
+                                                            <div class="text-info h4 font-noraml">54B <span class="text-success"><i class="fa fa-play fa-rotate-270"></i></span></div>
+                                                        </div>
+                                                        <div class="col-xs-4 col-sm-4 col-md-4 text-center m-b-lg">
+                                                            <h4 class="no-margins font-bold text-gray text-uppercase">GROSS PROFIT</h4>
+                                                            <div class="text-info h4 font-noraml">300M <span class="text-success"><i class="fa fa-play fa-rotate-270"></i></span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row m-b-xs">
+                                                        <div class="col-xs-4 col-sm-4 col-md-4 text-center m-b-lg">
+                                                            <h4 class="no-margins font-bold text-gray text-uppercase">MARKET CAP</h4>
+                                                            <div class="text-info h4 font-noraml">384B <span class="text-danger"><i class="fa fa-play fa-rotate-90"></i></span></div>
+                                                        </div>
+                                                        <div class="col-xs-4 col-sm-4 col-md-4 text-center m-b-lg">
+                                                            <h4 class="no-margins font-bold text-gray text-uppercase">ANNUAL REVENUE</h4>
+                                                            <div class="text-info h4 font-noraml">54B <span class="text-success"><i class="fa fa-play fa-rotate-270"></i></span></div>
+                                                        </div>
+                                                        <div class="col-xs-4 col-sm-4 col-md-4 text-center m-b-lg">
+                                                            <h4 class="no-margins font-bold text-gray text-uppercase">GROSS PROFIT</h4>
+                                                            <div class="text-info h4 font-noraml">300M <span class="text-success"><i class="fa fa-play fa-rotate-270"></i></span></div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- /COMPANY-SCORE -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <a href="#" class="pull-right font-bold">More</a>
+                                                    <h4>FINANICAL DATA</h4>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    <table class="table  table-striped finanical-data">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Item</th>
+                                                            <th>Value</th>
+                                                            <th>1YR</th>
+                                                            <th>3YR</th>
+                                                            <th>4YR</th>
+                                                            <th>5YR</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>Total Revenue</td>
+                                                            <td class="font-bold">$13B</td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>                                                            
+                                                        <tr>
+                                                            <td>Net Income</td>
+                                                            <td class="font-bold">$2.2B</td>
+                                                            <td><span class="text-success">-1.3%</span></td>
+                                                            <td><span class="text-success">-1.3%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Margin</td>
+                                                            <td class="font-bold">$13B</td>
+                                                            <td><span class="text-success">-1.3%</span></td>
+                                                            <td><span class="text-success">-1.3%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Cash &amp; Short Term Inv</td>
+                                                            <td class="font-bold">$230M</td>
+                                                            <td><span class="text-success">+35%</span></td>
+                                                            <td><span class="text-success">+35%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Working Capital</td>
+                                                            <td class="font-bold">$35M</td>
+                                                            <td><span class="text-success">-15%</span></td>
+                                                            <td><span class="text-success">-15%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Cash Flow From Operation</td>
+                                                            <td>$20M</td>
+                                                            <td><span class="text-danger">-5%</span></td>
+                                                            <td><span class="text-danger">-5%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Current Ratio</td>
+                                                            <td class="font-bold">2.2</td>
+                                                            <td><span class="text-success">+35%</span></td>
+                                                            <td><span class="text-success">+35%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Altman Z-Score (Bankruptcy)</td>
+                                                            <td class="font-bold">2.2</td>
+                                                            <td><span class="text-success">+15%</span></td>
+                                                            <td><span class="text-success">+15%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Days Sales Outstanding</td>
+                                                            <td class="font-bold">66 Days</td>
+                                                            <td><span class="text-success">+15%</span></td>
+                                                            <td><span class="text-success">+15%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Day Payable Outstanding</td>
+                                                            <td class="font-bold">74 Days</td>
+                                                            <td><span class="text-success">+15%</span></td>
+                                                            <td><span class="text-success">+15%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Day Inventory Outstanding</td>
+                                                            <td class="font-bold">100 Days</td>
+                                                            <td><span class="text-success">+15%</span></td>
+                                                            <td><span class="text-success">+15%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Stock Growth</td>
+                                                            <td class="font-bold">45% (52 wks)</td>
+                                                            <td><span class="text-success">+15%</span></td>
+                                                            <td><span class="text-success">+15%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- /FINANICAL-DATA -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <a href="#" class="pull-right font-bold">More</a>
+                                                    <h4>PRODUCTS</h4>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    <table class="table  table-striped finanical-data">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Product Name</th>
+                                                            <th>Type</th>
+                                                            <th>Year</th>
+                                                            <th>Data1</th>
+                                                            <th>Data2</th>
+                                                            <th>Data3</th>
+                                                            <th>Data4</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>Analog</td>
+                                                            <td class="font-bold">IP Based</td>
+                                                            <td><span class="text-success">Premium Pricing</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-success">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-success">-0.4%</span></td>
+                                                        </tr>                                                            
+                                                        <tr>
+                                                            <td>Hardware</td>
+                                                            <td class="font-bold">IP Based</td>
+                                                            <td><span class="text-danger">Low Pricing</span></td>
+                                                            <td><span class="text-success">-1.3%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-success">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Enterprise Software</td>
+                                                            <td class="font-bold">IP Based</td>
+                                                            <td><span class="text-success">Strong</span></td>
+                                                            <td><span class="text-success">-1.3%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-success">-0.4%</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Consumer Software</td>
+                                                            <td class="font-bold">IP Based</td>
+                                                            <td><span class="text-danger">Weak</span></td>
+                                                            <td><span class="text-success">+35%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                            <td><span class="text-success">-0.4%</span></td>
+                                                            <td><span class="text-danger">-0.4%</span></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- /PRODUCTS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /Main Tabs -->
+
+            </div><!-- /Container -->
+
+        </div><!-- /Wrapper-Content -->
+
+        </div><!-- /#Page-Wrapper -->
+    </div><!-- /#Wrapper -->
+
+
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/z2.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+    <!-- Flot -->
+    <script src="js/plugins/flot/jquery.flot.js"></script>
+    <script src="js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="js/plugins/flot/jquery.flot.resize.js"></script>
+
+    <!-- ChartJS-->
+    <script src="js/plugins/chartJs/Chart.min.js"></script>
+
+    <!-- Peity -->
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+    <!-- Peity demo -->
+    <script src="js/demo/peity-demo.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+
+
+            var d1 = [[1262304000000, 6], [1264982400000, 3057], [1267401600000, 20434], [1270080000000, 31982], [1272672000000, 26602], [1275350400000, 27826], [1277942400000, 24302], [1280620800000, 24237], [1283299200000, 21004], [1285891200000, 12144], [1288569600000, 10577], [1291161600000, 10295]];
+            var d2 = [[1262304000000, 5], [1264982400000, 200], [1267401600000, 1605], [1270080000000, 6129], [1272672000000, 11643], [1275350400000, 19055], [1277942400000, 30062], [1280620800000, 39197], [1283299200000, 37000], [1285891200000, 27000], [1288569600000, 21000], [1291161600000, 17000]];
+
+            var data1 = [
+                { label: "Data 1", data: d1, color: '#17a084'},
+                { label: "Data 2", data: d2, color: '#127e68' }
+            ];
+            $.plot($("#flot-chart1"), data1, {
+                xaxis: {
+                    tickDecimals: 0
+                },
+                series: {
+                    lines: {
+                        show: true,
+                        fill: true,
+                        fillColor: {
+                            colors: [{
+                                opacity: 1
+                            }, {
+                                opacity: 1
+                            }]
+                        },
+                    },
+                    points: {
+                        width: 0.1,
+                        show: false
+                    },
+                },
+                grid: {
+                    show: false,
+                    borderWidth: 0
+                },
+                legend: {
+                    show: false,
+                }
+            });
+
+            var lineData = {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [
+                    {
+                        label: "Example dataset",
+                        fillColor: "rgba(220,220,220,0.5)",
+                        strokeColor: "rgba(220,220,220,1)",
+                        pointColor: "rgba(220,220,220,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: [65, 59, 40, 51, 36, 25, 40]
+                    },
+                    {
+                        label: "Example dataset",
+                        fillColor: "rgba(26,179,148,0.5)",
+                        strokeColor: "rgba(26,179,148,0.7)",
+                        pointColor: "rgba(26,179,148,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(26,179,148,1)",
+                        data: [48, 48, 60, 39, 56, 37, 30]
+                    }
+                ]
+            };
+
+            var lineOptions = {
+                scaleShowGridLines: true,
+                scaleGridLineColor: "rgba(0,0,0,.05)",
+                scaleGridLineWidth: 1,
+                bezierCurve: true,
+                bezierCurveTension: 0.4,
+                pointDot: true,
+                pointDotRadius: 4,
+                pointDotStrokeWidth: 1,
+                pointHitDetectionRadius: 20,
+                datasetStroke: true,
+                datasetStrokeWidth: 2,
+                datasetFill: true,
+                responsive: true,
+            };
+
+
+            var ctx = document.getElementById("lineChart").getContext("2d");
+            var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
+
+        });
+    </script>
+
+</body>
+
+</html>

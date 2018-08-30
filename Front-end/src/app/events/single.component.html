@@ -1,0 +1,603 @@
+<form [formGroup]="eventFormGroup" (ngSubmit)="onFormSubmit(eventFormGroup.value)" novalidate>
+  <div *ngIf="isLoadingData" style="text-align:center" id="spinner">
+    <img src="../../assets/images/page-loader.gif" />
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="m-t-xs m-b-md">
+        <a [routerLink]="['/events']" class="btn btn-white m-r-sm">
+          <i class="fa fa-arrow-circle-o-left"></i>&nbsp; Back
+        </a>
+      </h2>
+
+      <!-- <p>{{eventFormGroup.value|json}}</p> -->
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped vertical-middle">
+          <thead>
+            <tr>
+              <th class="vertical-middle" width="25%">Feature</th>
+              <th class="vertical-middle">Type</th>
+            </tr>
+          </thead>
+          <tbody formGroupName="details">
+            <tr>
+              <td>
+                Event Category
+                <label class="error" *ngIf="isFieldValid('details.category.id')">*</label>
+              </td>
+              <td formGroupName="category">
+                <select class="form-control" formControlName="id" (change)="onSelectCategory($event.target.value)">
+                  <option value="-1">Select Category</option>
+                  <option *ngFor="let category of categories" [value]="category.id">
+                    {{ category.name }}
+                  </option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Event Type
+                <label class="error" *ngIf="isFieldValid('details.type.id')">*</label>
+              </td>
+              <td formGroupName="type">
+                <select class="form-control" formControlName="id">
+                  <option value="-1">Select Event Type</option>
+                  <option *ngFor="let eventType of eventTypes" [value]="eventType.id">{{ eventType.name }}</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Event Date
+                <label class="error" *ngIf="isFieldValid('details.startDate')">*</label>
+              </td>
+              <td>
+                <div id="data_2">
+                  <div class="input-group date">
+                    <span class="input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                    <!-- <input formControlName="startDate" class="form-control" type="date"> -->
+                    <my-date-picker name="startdate" [options]="myDatePickerOptions" formControlName="startDate"></my-date-picker>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Event Title
+                <label class="error" *ngIf="isFieldValid('details.title')">*</label>
+              </td>
+              <td>
+                <input formControlName="title" class="form-control" placeholder="Enter Event Title" type="text">
+              </td>
+            </tr>
+            <tr>
+              <td>Event Description
+                  <label class="error" *ngIf="isFieldValid('details.description')">*</label>
+                </td>
+              <td>
+                <textarea formControlName="description" placeholder="Enter Description" class="form-control" type="text"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>Source URL                
+                  <label class="error" *ngIf="sources?.length==0">*</label>
+              </td>
+              <td>
+                <div class="input-group">
+                  <input class="form-control" placeholder="Enter Event URL" type="url" #sourceUrl>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-info" style="padding: 6px 10px;" (click)="addSource(sourceUrl.value,sourceName.value);sourceUrl.value='';sourceName.value='';">
+                      <i class="fa fa-plus-circle"></i> Add Source
+                    </button>
+                  </span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Source Name
+                  <label class="error" *ngIf="sources?.length==0">*</label>
+                </td>
+              <td>
+                <input class="form-control" placeholder="Enter Source Name" type="text" #sourceName>
+                <ul class="unstyled list-group m-n">
+                  <li class="list-group-item clearfix" *ngFor="let source of sources; let idx = index">
+                    <a href="{{source.url}}}" target="_blank" class="text-underline pull-left">{{source.name}}</a>
+                    <a (click)="sources.splice(idx, 1);" class="pull-right">x</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td>Upload Images                
+                  <label class="error" *ngIf="images?.length==0">*</label>
+              </td>
+              <td>
+                <input #fileUpload type="file" (change)="fileChangeEvent($event,true)" class="btn  btn-w-xl btn-success m-b-xs" multiple accept="image/*" />
+
+                <ul class="unstyled list-group m-n">
+                  <li class="list-group-item clearfix" *ngFor="let image of images; let idx = index">
+                    <a href="api/uploads/{{image.id}}{{image.extension}}" target="_blank" class="text-underline pull-left">{{image.name}}</a>
+                    <a (click)="removefile(idx,true)" class="pull-right">x</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td>Attach File(s)</td>
+              <td>
+                <input #fileUpload type="file" (change)="fileChangeEvent($event)" class="btn  btn-w-xl btn-success m-b-xs" multiple />
+
+                <ul class="unstyled list-group m-n">
+                  <li class="list-group-item clearfix" *ngFor="let attachment of attachments; let idx = index">
+                    <a href="api/uploads/{{attachment.id}}{{attachment.extension}}" target="_blank" class="text-underline pull-left">{{attachment.name}}</a>
+                    <a (click)="removefile(idx)" class="pull-right">x</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row panel-collapse collapse" id="collapseMoreFeatures" aria-expanded="true"> -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <a data-toggle="collapse" (click)="showMoreFeatures=!showMoreFeatures" id="MoreFeatures"
+         class="btn btn-block btn-info m-b-sm">+ Load More Features</a>
+    </div>
+  </div>
+
+  <div class="row" [hidden]="!showMoreFeatures">
+    <div class="col-md-12" formGroupName="features">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th class="vertical-middle" width="25%">Feature</th>
+              <th class="vertical-middle">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Disaster</td>
+              <td>
+                <select class="form-control">
+                  <option value="-1">Select Disaster</option>
+                  <option *ngFor="let disaster of disasters" [value]="disasters.id">
+                    {{ disaster.name }}
+                  </option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Magnitude Value</td>
+              <td>
+                <input class="form-control" formControlName="value" placeholder="Enter keyword" type="number">
+              </td>
+            </tr>
+            <tr>
+              <td>Magnitude Scale</td>
+              <td>
+                <select class="form-control" formControlName="unit">
+                  <option value="-1">Select Magnitude Scale</option>
+                  <option value="0">Richter</option>
+                  <option value="1">Km2</option>
+                  <option value="2">Kph</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Population Affected</td>
+              <td>
+                <input class="form-control" formControlName="populationAffected" placeholder="Enter keyword" type="number">
+              </td>
+            </tr>
+            <tr>
+              <td>Acres Burned</td>
+              <td>
+                <input class="form-control" formControlName="acresBurned" placeholder="Enter keyword" type="number">
+              </td>
+            </tr>
+            <tr>
+              <td>Deaths</td>
+              <td>
+                <input class="form-control" formControlName="populationDeaths" placeholder="Enter keyword" type="number">
+              </td>
+            </tr>
+            <tr>
+              <td>Insured Losses</td>
+              <td>
+                <input class="form-control" formControlName="insuredLosses" placeholder="Enter keyword" type="number">
+              </td>
+            </tr>
+            <tr>
+              <td>Missing</td>
+              <td>
+                <input class="form-control" formControlName="populationMissing" placeholder="Enter keyword" type="number">
+              </td>
+            </tr>
+            <tr>
+              <td>Damage (M $)</td>
+              <td>
+                <input class="form-control" formControlName="damageInMillionUsd" placeholder="Enter keyword" type="number">
+              </td>
+            </tr>
+            <tr>
+              <td>Damage (Property)</td>
+              <td>
+                <input class="form-control" formControlName="damageInProperty" placeholder="Enter keyword" >
+              </td>
+            </tr>
+            <tr>
+              <td>Notes</td>
+              <td>
+                <input class="form-control" formControlName="notes" placeholder="Enter keyword" type="text">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <a data-toggle="modal" (click)="showAffectedLocations=!showAffectedLocations" class="btn btn-block btn-info m-b-sm">Manage Affected Locations</a>
+
+    </div>
+  </div>
+
+  <div class="row" [hidden]="!showAffectedLocations">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped m-n vertical-middle">
+              <tbody>
+                <tr formGroupName="place">
+                  <td class="font-bold" width="30%">
+                    Country
+                    <label class="error" *ngIf="isFieldValid('place.country.countryId')">*</label>
+                  </td>
+                  <td formGroupName="country">
+                    <select formControlName="countryId" class="form-control" (change)="onSelectCountry($event.target.value)">
+                      <option value="-1">Select Country</option>
+                      <option *ngFor="let country of countries" [value]="country.countryId">
+                        {{country.name}}
+                      </option>
+                    </select>
+                  </td>
+                </tr>
+                <tr formGroupName="place">
+                  <td class="font-bold">
+                    State
+                    <!-- <label class="error" *ngIf="isFieldValid('place.state.stateId')">*</label> -->
+                  </td>
+                  <td formGroupName="state">
+                    <select formControlName="stateId" class="form-control" (change)="onSelectState($event.target.value)">
+                      <option value="-1">Select State</option>
+                      <option *ngFor="let state of States" [value]="state?.stateId">
+                        {{ state.name }}
+                      </option>
+                    </select>
+                  </td>
+                </tr>
+                <tr formGroupName="place">
+                  <td class="font-bold">
+                    City
+                    <!-- <label class="error" *ngIf="isFieldValid('place.city.cityId')">*</label> -->
+                  </td>
+                  <td formGroupName="city">
+                    <select formControlName="cityId" class="form-control">
+                      <option value="-1">Select City</option>
+                      <option *ngFor="let city of cities" [value]="city?.cityId">
+                        {{ city.name }}
+                      </option>
+                    </select>
+                  </td>
+                </tr>
+                <tr formGroupName="place">
+                  <td class="font-bold">Other</td>
+                  <td>
+                    <input formControlName="other" class="form-control" placeholder="Enter keyword" type="text">
+                  </td>
+                </tr>
+                <tr formGroupName="details">
+                  <td class="font-bold">
+                    Severity
+                    <label class="error" *ngIf="isFieldValid('details.severity')">*</label>
+                  </td>
+                  <td>
+                    <select formControlName="severity" class="form-control">
+                      <option value="-1">Select Severity</option>
+                      <option value="0">Minor</option>
+                      <option value="1">Moderate</option>
+                      <option value="2">Severe</option>
+                      <option value="3">Extreme</option>
+                      <option value="4">N/A</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-bold">
+                    Radius (Affected)
+                    <label class="error" *ngIf="isFieldValid('effectRange.affectedRadius')">*</label>
+                  </td>
+                  <td formGroupName="effectRange">
+                    <input formControlName="affectedRadius" class="form-control" placeholder="Enter keyword" type="number">
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-bold">
+                    Radius (Near)
+                    <label class="error" *ngIf="isFieldValid('effectRange.nearRadius')">*</label>
+                  </td>
+                  <td formGroupName="effectRange">
+                    <input formControlName="nearRadius" class="form-control" placeholder="Enter keyword" type="number">
+                  </td>
+                </tr>
+                <tr formGroupName="effectRange">
+                  <td class="font-bold">
+                    Lat
+                    <label class="error" *ngIf="isFieldValid('effectRange.location.coordinates')">*</label>
+                  </td>
+                  <td formGroupName="location">
+                    <div formArrayName="coordinates">
+                      <input class="form-control" placeholder="Enter keyword" type="number" [formControlName]="0">
+                    </div>
+                  </td>
+                </tr>
+                <tr formGroupName="effectRange">
+                  <td class="font-bold">
+                    Long
+                    <label class="error" *ngIf="isFieldValid('effectRange.location.coordinates')">*</label>
+                  </td>
+                  <td formGroupName="location">
+                    <div formArrayName="coordinates">
+                      <input class="form-control" placeholder="Enter keyword" type="number" [formControlName]="1">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-bold">Status
+                      <label class="error" *ngIf="isFieldValid('details.status')">*</label></td>
+                  <td formGroupName="details">
+                    <select class="form-control" name="account" formControlName="status" [(ngModel)]="statusId">
+                      <option value="-1">Select Status</option>
+                      <option value="0">Warning</option>
+                      <option value="1">Hit</option>
+                      <option value="2">Started</option>
+                      <option value="3">Active</option>
+                      <option value="4">InActive</option>
+                      <option value="5">Contained</option>
+                      <option value="6">Closed</option>
+                    </select>
+                    <input *ngIf="statusId==5" class="form-control m-t-xs" placeholder="Percentage" type="number" value="%" formControlName="statusPercentage">
+                  </td>
+                </tr>
+                <tr formGroupName="associatedEvent">
+                  <td class="font-bold">Associated Event Category</td>
+                  <td formGroupName="category">
+                    <select class="form-control" (change)="onSelectAssociatedCategory($event.target.value)" formControlName="id">
+                      <option value="-1">Select Event Category</option>
+                      <option *ngFor="let category of categories" [value]="category.id">
+                        {{ category.name }}
+                      </option>
+                    </select>
+                  </td>
+                </tr>
+                <tr formGroupName="associatedEvent">
+                  <td class="font-bold">Associated Event Type</td>
+                  <td formGroupName="type">
+                    <select class="form-control" formControlName="id">
+                      <option value="-1">Select Event Type</option>
+                      <option *ngFor="let eventType of associatedEventTypes" [value]="eventType.id">{{ eventType.name }}</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-bold">Associated Severity</td>
+                  <td formGroupName="associatedEvent">
+                    <select class="form-control" formControlName="severity">
+                      <option value="-1">Select Severity</option>
+                      <option value="0">Minor</option>
+                      <option value="1">Moderate</option>
+                      <option value="2">Severe</option>
+                      <option value="3">Extreme</option>
+                      <option value="4">N/A</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr formGroupName="associatedEvent">
+                  <td class="font-bold">Associated Affected Radius</td>
+                  <td formGroupName="effectRange">
+                    <input class="form-control" placeholder="Enter keyword" type="number" formControlName="affectedRadius">
+                  </td>
+                </tr>
+                <tr formGroupName="associatedEvent">
+                  <td class="font-bold">Associated Near Radius</td>
+                  <td formGroupName="effectRange">
+                    <input class="form-control" placeholder="Enter keyword" type="number" formControlName="nearRadius">
+                  </td>
+                </tr>
+                <tr formGroupName="associatedEvent">
+                  <td class="font-bold">Associated Add Another Lat/Long</td>
+                  <td>
+                    <a data-toggle="collapse" (click)="showAssociatedCoordinates=!showAssociatedCoordinates" class="text-underline">Add Another Lat/Long</a>
+                    <div [hidden]="!showAssociatedCoordinates" formGroupName="effectRange">
+                      <div role="form" class="form-inline" formGroupName="location">
+                        <div formArrayName="coordinates">
+                          <div class="form-group">
+                            <label>Lat: </label>
+                            <input placeholder="Enter Lat" class="form-control" [formControlName]="0" type="number">
+                          </div>
+                          <div class="form-group">
+                            <label>Long: </label>
+                            <input placeholder="Enter Long" class="form-control" [formControlName]="1" type="number">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                  <tr>
+                      <td class="font-bold">Associated Event Status</td>
+                      <td formGroupName="associatedEvent">
+                          <select class="form-control" name="account" formControlName="categoryStatus">
+                              <option value="-1">Select Status</option>
+                              <option value="0">Warning</option>
+                              <option value="1">Hit</option>
+                              <option value="2">Started</option>
+                              <option value="3">Active</option>
+                              <option value="4">InActive</option>
+                              <option value="5">Contained</option>
+                              <option value="6">Closed</option>
+                          </select>
+                      </td>
+                  </tr>
+                <tr>
+                  <td class="font-bold">Alert Customers
+                      <label class="error" *ngIf="isFieldValid('isAlert')">*</label></td>
+                  <td>
+                    <select class="form-control" name="account" formControlName="isAlert">
+                      <!-- <option value="-1">Select</option> -->
+                      <option value="true">Yes</option>
+                      <option value="false">No</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <a class="btn btn-block btn-info m-b-sm m-t-sm" (click)="onAffectedClick()">Check Affected Locations</a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+              <thead *ngIf="affectedSuppliers?.length>0">
+                <tr>
+                  <th class="vertical-middle text-center" colspan="6">
+                    <a href="#" class="text-underline">Affected Suppliers ({{affectedSuppliers?.length}})</a>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="affectedSuppliers?.length>0">
+                <tr>
+                  <td class="font-bold">Company Name</td>
+                  <td class="font-bold">Location Type</td>
+                  <td class="font-bold">Disaster Type</td>
+                  <td class="font-bold">Distance to Radius (km)</td>
+                  <td class="font-bold">Status</td>
+                  <td class="font-bold">Action</td>
+                </tr>
+                <tr *ngFor="let affectedSupplier of affectedSuppliers; let idx=index">
+                  <td> {{affectedSupplier.name}} </td>
+                  <td> {{affectedSupplier.locationType}} </td>
+                  <td> {{affectedSupplier.disasterTypes[0]?.name+(affectedSupplier.disasterTypes.length==1?"":", "+affectedSupplier.disasterTypes[1]?.name)}} </td>
+                  <td> {{affectedSupplier.distance}} </td>
+                  <td> {{getAffectedStatus(affectedSupplier.status)}} </td>
+                  <td>
+                    <input type="checkbox" [checked]="affectedSupplier.isConfirmed" (change)="confirmSuppliers(affectedSupplier.locationId,$event)" /> Confirm |
+                    <a (click)="affectedSuppliers.splice(idx, 1);" class="text-underline">Remove</a> |
+                    <a [routerLink]="['/events/map',affectedSupplier.location.coordinates[0],affectedSupplier.location.coordinates[1]]" target="_blank" class="text-underline">View on The map</a>
+                  </td>
+                </tr>
+              </tbody>
+              <thead *ngIf="affectedAirports?.length>0">
+                <tr>
+                  <th class="vertical-middle text-center" colspan="6">
+                    <a href="#" class="text-underline">Affected Airports ({{affectedAirports?.length}})</a>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="affectedAirports?.length>0">
+                <tr>
+                  <td class="font-bold">Airport Name</td>
+                  <td class="font-bold">IATA</td>
+                  <td class="font-bold">Disaster Type</td>
+                  <td class="font-bold">Distance to Radius (km)</td>
+                  <td class="font-bold">Status</td>
+                  <td class="font-bold">Action</td>
+                </tr>
+                <tr *ngFor="let affectedAirport of affectedAirports; let idx=index">
+                  <td> {{affectedAirport.name}} </td>
+                  <td> {{affectedAirport.iata}} </td>
+                  <td> {{affectedAirport.disasterTypes[0]?.name+(affectedAirport.disasterTypes.length==1?"":", "+affectedAirport.disasterTypes[1]?.name)}} </td>
+                  <td> {{affectedAirport.distance}} </td>
+                  <td> {{getAffectedStatus(affectedAirport.status)}} </td>
+                  <td>
+                    <input type="checkbox" [checked]="affectedAirport.isConfirmed" (change)="confirmAirports(affectedAirport.locationId,$event)" /> Confirm |
+                    <a (click)="affectedAirports.splice(idx, 1);" class="text-underline">Remove</a> |
+                    <a [routerLink]="['/events/map',affectedAirport.location.coordinates[0],affectedAirport.location.coordinates[1]]" class="text-underline">View on The map</a>
+                  </td>
+                </tr>
+              </tbody>
+              <thead *ngIf="affectedSeaports?.length>0">
+                <tr>
+                  <th class="vertical-middle text-center" colspan="6">
+                    <a href="#" class="text-underline">Affected Seaports ({{affectedSeaports?.length}})</a>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="affectedSeaports?.length>0">
+                <tr>
+                  <td class="font-bold">Seaport Name</td>
+                  <td class="font-bold">UN/LOCODE</td>
+                  <td class="font-bold">Disaster Type</td>
+                  <td class="font-bold">Distance to Radius (km)</td>
+                  <td class="font-bold">Status</td>
+                  <td class="font-bold">Action</td>
+                </tr>
+                <tr *ngFor="let affectedSeaport of affectedSeaports; let idx=index">
+                  <td> {{affectedSeaport.name}} </td>
+                  <td> {{affectedSeaport.locode}} </td>
+                  <td> {{affectedSeaport.disasterTypes[0]?.name+(affectedSeaport.disasterTypes.length==1?"":", "+affectedSeaport.disasterTypes[1]?.name)}} </td>
+                  <td> {{affectedSeaport.distance}} </td>
+                  <td> {{getAffectedStatus(affectedSeaport.status)}} </td>
+                  <td>
+                    <input type="checkbox" [checked]="affectedSeaport.isConfirmed" (change)="confirmSeaports(affectedSeaport.locationId,$event)" /> Confirm |
+                    <a (click)="affectedSeaports.splice(idx, 1);" class="text-underline">Remove</a> |
+                    <a [routerLink]="['/events/map',affectedSeaport.location.coordinates[0],affectedSeaport.location.coordinates[1]]" class="text-underline">View on The map</a>
+                  </td>
+                </tr>
+                <!-- <tr>
+                    <td colspan="6">
+                    <a href="#" class="btn btn-info pull-right">
+                        <i class="fa fa-plus"></i> Add
+                    </a>
+                    </td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="row">
+          <div class="col-md-12">
+              <a href="#" class="btn btn-info m-b-sm">View All on Map</a>
+          </div>
+      </div> -->
+      <button type="submit" class="btn btn-success pull-right">Submit</button>
+    </div>
+  </div>
+  <!-- <button type="submit" class="btn btn-success pull-right">Submit</button> -->
+</form>
+<!-- /Container -->

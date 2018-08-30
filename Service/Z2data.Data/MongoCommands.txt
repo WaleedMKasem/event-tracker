@@ -1,0 +1,54 @@
+// Auto-Incrementing Sequence 
+db.counters.insert(
+   {
+      _id: "imageId",
+      seq: 0
+   }
+)
+db.system.js.save(
+   {
+     _id: "getNextSequence",
+     value : function (name) {
+   var ret = db.counters.findAndModify(
+          {
+            query: { _id: name },
+            update: { $inc: { seq: 1 } },
+            new: true
+          }
+   );
+
+   return ret.seq;
+   }
+
+   db.loadServerScripts();
+   getNextSequence("imageId")
+   
+   // Limit push... Limit Number of Elements in an Array after an Update
+   db.students.insert({
+  _id: 2,
+  scores: [
+    { attempt: 1, score: 10 },
+    { attempt: 2 , score:8 }
+  ]
+});
+   db.students.update(
+   { _id: 1 },
+   {
+     $push: {
+        scores: {
+           $each: [ { attempt: 3, score: 7 }, { attempt: 4, score: 14 } ],
+           $sort: { score: 1 },
+           $slice: -3
+        }
+     }
+   }
+)
+// driver
+http://stackoverflow.com/questions/15787498/mongodb-2-4s-limit-number-of-elements-in-an-array-after-an-update-using-c-sha
+http://stackoverflow.com/questions/18661896/mongodb-c-sharp-update-array-in-document
+var update = Update<Test>.PushEach(
+    x => x.B, 
+    args => args.SortDescending(x => x.C).Slice(-3), 
+    new[] { new B { C = 0 }, new B { C = 1 } });
+
+

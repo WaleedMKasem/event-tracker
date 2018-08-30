@@ -1,0 +1,287 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <title>Event Tracker</title>
+
+    <!-- / M A I N L Y   S T Y L E S \ -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="assets/css/animate.css" rel="stylesheet">
+
+    <!-- / T A B L E \ -->
+        <!-- Static Tables -->
+        <link href="assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+
+        <!-- Data Tables -->
+        <link href="assets/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+
+        <!-- Foo Table -->
+        <link href="assets/css/plugins/footable/footable.core.css" rel="stylesheet">
+
+        <!-- jqGrid Table -->
+        <link href="assets/css/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+        <link href="assets/css/plugins/jqGrid/ui.jqgrid.css" rel="stylesheet">
+
+
+    <!-- / F O R M S \ -->
+        <link href="assets/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+        <link href="assets/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+        <link href="assets/css/plugins/select2/select2.min.css" rel="stylesheet">
+
+    <!-- / C H A R T S \ -->
+        <!-- Gritter -->
+        <link href="assets/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+
+        <!-- c3 Charts -->
+        <link href="assets/css/plugins/c3/c3.min.css" rel="stylesheet">
+
+        <!-- Morris -->
+        <link href="assets/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+
+        <!-- Chartist -->
+        <link href="assets/css/plugins/chartist/chartist.min.css" rel="stylesheet">
+
+    <!-- / F O R M S \ -->
+
+         <link href="assets/css/plugins/select2/select2.min.css" rel="stylesheet">
+
+    <!-- / C U S T O M \ -->
+        <!-- Style -->
+        <link href="assets/css/plugins/timeline/timeline.css" rel="stylesheet">
+        <link href="assets/css/z2.css" rel="stylesheet">
+        <!-- Favicon -->
+        <link rel="icon" href="assets/images/favicon.png">
+
+    <!-- / M A I N L Y   S C R I P T S \ -->
+        <!-- Mainly scripts -->
+        <script src="assets/js/jquery-2.1.1.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <!-- Auto Complete -->
+        <script src="assets/supplychain/samples/go.js"></script>
+        <script src="assets/js/typeahead.bundle.js"></script>
+        <script>
+            // #top-search
+            $(document).ready(function () {
+                var partlist = new Bloodhound({
+                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace("val"),
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    limit: 10,
+                    remote: '../company2.ashx?q=%QUERY'
+
+                });
+
+                partlist.initialize();
+                $('#top-search').typeahead(null, {
+                    name: 'partno',
+                    displayKey: 'pn',
+                    source: partlist.ttAdapter(),
+                    templates: {
+                        suggestion: function (partno) {
+                            return '<b><a href="' + partno.url + '"><span>' + partno.pn + '' +
+                                     '</span><span class="type typePart">' + partno.type + '</span></a></b>';
+                        }
+                    }
+                }).bind("typeahead:selected", function (evt, data) {
+
+                    window.location = data.url;
+                });
+
+                $('.twitter-typeahead').css('display', 'inline');
+                $('.twitter-typeahead').css('position', 'static');
+                $('.twitter-typeahead').css('direction', 'ltr');
+            })
+        </script>
+        <style type="text/css">
+            .highcharts-tooltip h3 {
+                margin: 0.3em 0;
+            }
+        </style>
+
+</head>
+
+<body class="top-navigation">
+
+    <div id="wrapper">
+        <div id="page-wrapper" class="white-bg">
+        <div class="row border-bottomhd gray-bg">
+            <nav class="navbar navbar-static-top" style="padding: 0 50px;" role="navigation">
+                <div class="navbar-header">
+                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                        <i class="fa fa-reorder"></i>
+                    </button>
+                    <a href="#" class="navbar-brand">
+                        <img src="images/logo.png" class="img-responsive pull-left" alt="Z2DATA | Dashboard">
+                        <span class="h6 font-noraml text-uppercase m-t-none m-l-xs text-muted pull-left">SUPPLY<br>CHAIN</span>
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="index8.html">Browse <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li>
+                            <a href="riskmanager.html">Risk Manager</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="navbar-header navbar-form-custom">
+                        <form role="search" class="form-inline" action="#">
+                            <div class="form-group">
+                                <div class="input-group">                                
+                                    <div class="input-group-btn" id="scopeOptionDiv">
+                                        <button data-toggle="dropdown" class="btn btn-white btn-w-md dropdown-toggle" type="button">All <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">All</a></li>
+                                            <li><a href="#">Part Number</a></li>
+                                            <li><a href="#">Companies</a></li>
+                                            <li><a href="#">Family</a></li>
+                                        </ul>
+                                    </div>
+                                    <input type="text" data-provide="typeahead" name="top-search" placeholder="Search" class="form-control" />
+                                    <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                                
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-nav top-links navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info navuser" data-toggle="dropdown" href="#">
+                                <i class="fa fa-bell"></i>  <span class="label label-danger">8</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-alerts">
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <i class="fa fa-envelope-o fa-fw"></i> You have 16 messages
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="text-center link-block">
+                                        <a href="#">
+                                            <strong>See All Alerts</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle navuser" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                 John Doe <span class="caret"></span>
+                              </a>
+                              <ul class="dropdown-menu">
+                                    <li><a href="#"><i class="fa fa-gear fa-fw"></i>  Settings</a></li>
+                                    <li><a href="#"><i class="fa fa-sign-out fa-fw"></i>  Logout</a></li>
+                              </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav><!-- /Navbar -->
+        </div>
+        <div class="wrapper wrapper-content">
+
+          <app-root></app-root>
+        </div>
+        </div><!-- /#Page-Wrapper -->
+    </div><!-- /#Wrapper -->
+
+
+<!-- / T A B L E \ -->
+
+
+<!-- / F O R M S \ -->  
+    <!-- iCheck -->
+    <script src="assets/js/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+         $('#sidebarCollapse').on('click', function () {
+             $('#sidebar').toggleClass('active');
+         });
+        });
+     </script>
+
+    <!-- Select2 -->
+    <script src="assets/js/plugins/select2/select2.full.min.js"></script>
+    
+    <!-- Data picker -->
+    <script src="assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+        $('#data_2 .input-group.date').datepicker({
+                startView: 1,
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                autoclose: true,
+                format: "dd/mm/yyyy"
+        });
+    </script>
+    <!-- Sparkline -->
+    <script src="assets/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script type="text/javascript">
+        $("#BOMGradeHistory").sparkline([46, 33, 86, 54, 73, 53, 12, 53, 23, 65, 23, 63, 53, 42, 34, 56, 76, 15, 54, 23, 44], {
+            type: 'line',
+            lineColor: '#80a6dc',
+            lineWidth: '2',
+            fillColor: '#f5f7fa',
+            width: '100%',
+            height: '60px'
+        });
+    </script>
+    <!-- Sparkline demo data -->
+    <script src="assets/js/demo/sparkline-demo.js"></script>
+<!-- / C U S T O M \ -->
+    <!-- Toastr -->
+    <script src="assets/js/plugins/toastr/toastr.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="assets/js/z2.js"></script>
+    <script src="assets/js/plugins/pace/pace.min.js"></script>
+
+
+
+</body>
+
+</html>

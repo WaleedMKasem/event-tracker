@@ -1,0 +1,527 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9E3C5176-4B53-4C0A-A065-AD0F393B72F0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Z2data.Core</RootNamespace>
+    <AssemblyName>Z2data.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CodeEffects.Rule, Version=4.3.6.7, Culture=neutral, PublicKeyToken=baf0273d08cca81d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CodeEffects.Rule.4.3.6.7\lib\net40\CodeEffects.Rule.dll</HintPath>
+    </Reference>
+    <Reference Include="DnsClient, Version=1.0.7.0, Culture=neutral, PublicKeyToken=4574bb5573c51424, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DnsClient.1.0.7\lib\net45\DnsClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Bson, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MongoDB.Bson.2.5.0\lib\net45\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MongoDB.Driver.2.5.0\lib\net45\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MongoDB.Driver.Core.2.5.0\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Buffers.4.3.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Device" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuditEntity.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>AuditEntity.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Common\ItemsWithTotal.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>ItemsWithTotal.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Events\AffectedLocation.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>AffectedLocation.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Events\AffectedLocationMap.cs" />
+    <Compile Include="Domain\Events\AssociatedEvent.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>AssociatedEvent.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Events\AssociatedEventMap.cs" />
+    <Compile Include="Domain\Events\AttachmentMap.cs" />
+    <Compile Include="Domain\Events\DisasterHistory.cs" />
+    <Compile Include="Domain\Events\DisasterHistoryMap.cs" />
+    <Compile Include="Domain\Events\EffectRange.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>EffectRange.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Events\EffectRangeMap.cs" />
+    <Compile Include="Domain\Events\EventDetailsMap.cs" />
+    <Compile Include="Domain\Events\EventFeatureMap.cs" />
+    <Compile Include="Domain\Events\EventMap.cs" />
+    <Compile Include="Domain\Events\MiniEvent.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>MiniEvent.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Events\EventFeature.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>EventFeature.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Events\MiniEventMap.cs" />
+    <Compile Include="Domain\Events\PlaceMap.cs" />
+    <Compile Include="Domain\Events\SourceMap.cs" />
+    <Compile Include="Domain\Locations\Airport.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Airport.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Locations\Industry.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Industry.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Locations\IndustryMap.cs" />
+    <Compile Include="Domain\Locations\ParkIndustryMap.cs" />
+    <Compile Include="Domain\Locations\ParkCompanyMap.cs" />
+    <Compile Include="Domain\Locations\AirportMap.cs" />
+    <Compile Include="Domain\Locations\Company.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Company.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Locations\CompanyMap.cs" />
+    <Compile Include="Domain\Locations\Park.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Park.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Locations\ParkMap.cs" />
+    <Compile Include="Domain\Locations\Seaport.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Seaport.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Locations\SeaportMap.cs" />
+    <Compile Include="Domain\Locations\SeportType.cs" />
+    <Compile Include="Domain\Lookups\CityApi.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>CityApi1.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Lookups\CountryApi.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>CountryApi1.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Lookups\Disaster.cs" />
+    <Compile Include="Domain\Lookups\DisasterMap.cs" />
+    <Compile Include="Domain\Lookups\EventType.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>EventType.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Lookups\EventCategoryMap.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>EventCategoryMap.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Lookups\SubEventType.cs" />
+    <Compile Include="Domain\Lookups\DisastersType.cs" />
+    <Compile Include="Domain\Lookups\EventCategory.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>EventCategory.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Lookups\Location.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Location.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Lookups\AirportType.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>AirportType.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Lookups\Lookup.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Lookup.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Lookups\LookupMap.cs" />
+    <Compile Include="Domain\Lookups\StateApi.cs" />
+    <Compile Include="Enums\AffectedLocationType.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>AffectedLocationType.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Enums\DisasterUnit.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>DisasterUnit.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Enums\Effect.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Effect.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Enums\ImportType.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>ImportType.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Enums\LocationType.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>LocationType.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Enums\Rating.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Rating.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Enums\Severity.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Severity.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Enums\ImportStatus.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>ImportStatus.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Enums\Status.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Status.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Events\Attachment.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Attachment.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Events\Event.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Event.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="BaseEntity.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>BaseEntity.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Caching\Extensions.cs" />
+    <Compile Include="Caching\ICacheManager.cs" />
+    <Compile Include="Caching\MemoryCacheManager.cs" />
+    <Compile Include="Caching\Z2dataNullCache.cs" />
+    <Compile Include="Caching\PerRequestCacheManager.cs" />
+    <Compile Include="CommonHelper.cs" />
+    <Compile Include="ComponentModel\GenericDictionaryTypeConverter.cs" />
+    <Compile Include="ComponentModel\GenericListTypeConverter.cs" />
+    <Compile Include="ComponentModel\WriteLockDisposable.cs" />
+    <Compile Include="Configuration\ISettings.cs" />
+    <Compile Include="Configuration\Z2dataConfig.cs" />
+    <Compile Include="Data\IMongoRepositoryAsync.cs" />
+    <Compile Include="Domain\Events\EventDetails.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>EventDetails.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Events\Place.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Place.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Events\Source.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Source.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Lookups\City.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>City.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Lookups\Country.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>Country.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Domain\Lookups\State.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>State.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Events\EntityDeleted.cs" />
+    <Compile Include="Events\EntityInserted.cs" />
+    <Compile Include="Events\EntityUpdated.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Fakes\FakeHttpContext.cs" />
+    <Compile Include="Fakes\FakeHttpRequest.cs" />
+    <Compile Include="Fakes\FakeHttpResponse.cs" />
+    <Compile Include="Fakes\FakeHttpSessionState.cs" />
+    <Compile Include="Fakes\FakeIdentity.cs" />
+    <Compile Include="Fakes\FakePrincipal.cs" />
+    <Compile Include="Html\BBCodeHelper.cs" />
+    <Compile Include="Html\CodeFormatter\CLikeFormat.cs" />
+    <Compile Include="Html\CodeFormatter\CodeFormat.cs" />
+    <Compile Include="Html\CodeFormatter\CodeFormatHelper.cs" />
+    <Compile Include="Html\CodeFormatter\CSharpFormat.cs" />
+    <Compile Include="Html\CodeFormatter\HighlightOptions.cs" />
+    <Compile Include="Html\CodeFormatter\HtmlFormat.cs" />
+    <Compile Include="Html\CodeFormatter\JavaScriptFormat.cs" />
+    <Compile Include="Html\CodeFormatter\MshFormat.cs" />
+    <Compile Include="Html\CodeFormatter\SourceFormat.cs" />
+    <Compile Include="Html\CodeFormatter\TsqlFormat.cs" />
+    <Compile Include="Html\CodeFormatter\VisualBasicFormat.cs" />
+    <Compile Include="Html\HtmlHelper.cs" />
+    <Compile Include="Html\ResolveLinksHelper.cs" />
+    <Compile Include="HttpAction.cs" />
+    <Compile Include="IPagedList.cs" />
+    <Compile Include="IWebHelper.cs" />
+    <Compile Include="MimeTypes.cs" />
+    <Compile Include="Z2dataException.cs" />
+    <Compile Include="Z2dataVersion.cs" />
+    <Compile Include="PagedList.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebHelper.cs" />
+    <Compile Include="XmlHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EULA.htm" />
+    <Content Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="AuditEntity.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuditEntity.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="BaseEntity.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BaseEntity.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Common\ItemsWithTotal.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ItemsWithTotal.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Events\AffectedLocation.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AffectedLocation.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Events\AssociatedEvent.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssociatedEvent.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Events\Attachment.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Attachment.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Events\EffectRange.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EffectRange.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Events\MiniEvent.ts">
+      <DependentUpon>MiniEvent.cs</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Events\Event.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Event.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Events\EventDetails.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventDetails.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Events\EventFeature.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventFeature.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Events\Place.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Place.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Events\Source.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Source.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Locations\Airport.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Airport.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Locations\Company.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Company.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Locations\Industry.ts">
+      <DependentUpon>Industry.cs</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Locations\Park.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Park.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Locations\Seaport.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Seaport.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Lookups\CityApi1.ts">
+      <DependentUpon>CityApi.cs</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Lookups\City.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>City.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Lookups\CountryApi1.ts">
+      <DependentUpon>CountryApi.cs</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Lookups\Country.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Country.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Lookups\EventType.ts">
+      <DependentUpon>EventType.cs</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Lookups\EventCategoryMap.ts">
+      <DependentUpon>EventCategoryMap.cs</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Lookups\EventCategory.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventCategory.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Lookups\Location.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Location.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Lookups\AirportType.ts">
+      <DependentUpon>AirportType.cs</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Lookups\Lookup.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Lookup.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Lookups\State.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>State.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Enums\AffectedLocationType.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AffectedLocationType.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Enums\DisasterUnit.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DisasterUnit.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Enums\Effect.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Effect.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Enums\ImportType.ts">
+      <DependentUpon>ImportType.cs</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Enums\LocationType.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocationType.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Enums\Rating.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rating.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Enums\Severity.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Severity.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Enums\ImportStatus.ts">
+      <DependentUpon>ImportStatus.cs</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Enums\Status.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Status.cs</DependentUpon>
+    </TypeScriptCompile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,81 @@
+.timelinez {
+  width: 100%;
+  padding: 10px 5px;
+  position: relative;
+  max-width: 800px;
+}
+.timelinez:before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: calc(13.3% + 15px);
+  bottom: 0px;
+  width: 4px;
+  background: #ddd;
+}
+.timelinez:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.entryz {
+  clear: both;
+  text-align: left;
+  position: relative;
+}
+.entryz .titlez {
+  margin-bottom: .5em;
+  float: left;
+  width: 15%;
+  padding-right: 30px;
+  text-align: right;
+  position: relative;
+}
+.entryz .titlez:before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 4px solid salmon;
+  background-color: #fff;
+  border-radius: 100%;
+  top: 15%;
+  right: -8px;
+  z-index: 99;
+}
+.entryz .title h3 {
+  margin: 0;
+  font-size: 120%;
+}
+.entryz .title p {
+  margin: 0;
+  font-size: 100%;
+}
+.entryz .bodyz {
+  margin: 0 0 3em;
+  float: right;
+  width: 84%;
+  padding-left: 20px;
+}
+.entryz .bodyz p {
+  line-height: 1.4em;
+}
+.entryz .bodyz p:first-child {
+  margin-top: 0;
+  font-weight: 400;
+}
+.entryz .bodyz ul {
+  color: #aaa;
+  padding-left: 0;
+  list-style-type: none;
+}
+.entryz .bodyz ul li:before {
+  content: "–";
+  margin-right: .5em;
+}
+::after, ::before {
+    -webkit-box-sizing: content-box !important;
+    -moz-box-sizing: content-box !important;
+    box-sizing: content-box !important;
+}

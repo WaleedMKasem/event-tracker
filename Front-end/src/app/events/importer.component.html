@@ -1,0 +1,65 @@
+<div *ngIf="isLoadingData" style="text-align:center" id="spinner">
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="m-t-xs m-b-md">
+            <a [routerLink]="['/events']" class="btn btn-white m-r-sm">
+                <i class="fa fa-arrow-circle-o-left"></i>&nbsp; Back
+            </a>
+        </h2>
+
+        <!-- <p>{{eventFormGroup.value|json}}</p> -->
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-block btn-info m-b-sm">Importer</a>
+    </div>
+</div>
+<div *ngIf="successNote" class="alert alert-success">
+    <strong>{{successNote}}</strong>
+</div>
+<div *ngIf="errorNote" class="alert alert-danger">
+    <strong>{{errorNote}}</strong>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <td class="col-md-3">Type to import:</td>
+                        <td class="flexCell">
+                            <select class="form-control" (change)="onSelectType($event.target.value)">
+                                <option value="-1">Select Type</option>
+                                <option value="0">Airport</option>
+                                <option value="1">Seaport</option>
+                                <option value="2">Disaster</option>
+                                <option value="3">Event Category & Type</option>
+                                <option value="4">Park</option>
+                                <option value="5">Industry</option>
+                                <option value="6">Park Company</option>
+                                <option value="7">Park Industry</option>
+                            </select>
+                            <a href="../../assets/templates/{{typeName}}.xlsx" *ngIf="type!=-1" class="btn btn-primary col-md-3">Download Template</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Attach File(s)</td>
+                        <td>
+                            <input #fileUpload type="file" (change)="fileChangeEvent($event)" class="btn  btn-w-xl btn-success m-b-xs" multiple  accept=".xlsx, .xls, .csv" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button *ngIf="type!=-1" class="btn btn-success col-md-3" (click)="onImportClick()">Import</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

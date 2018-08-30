@@ -1,0 +1,174 @@
+<div class="row m-b-xs">
+    <div class="col-md-6">
+        <a [routerLink]="['single']" class="btn btn-info pull-left">Add New Event</a>
+    </div>
+    <div class="col-md-6">
+        <button (click)="clearFilters()" class="btn btn-white pull-right m-l-sm" type="button">Clear Filters</button>
+        <a [routerLink]="['importer']" class="btn btn-info pull-right m-l-sm">Importers</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped text-center vertical-middle">
+                <thead>
+                    <tr>
+                        <th class="text-center col-md-4" colspan="3">Location</th>
+                        <th class="text-center col-md-2">Event Category</th>
+                        <th class="text-center col-md-1">Event Type</th>
+                        <th class="text-center col-md-2">Date From/To</th>
+                        <th class="text-center col-md-1">Severity</th>
+                        <th class="text-center col-md-1">Status</th>
+                        <th class="text-center col-md-1">Customer Alerted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <select class="form-control"  [(ngModel)]="countryId" (change)="onSelectCountry($event.target.value)">
+                                <option value="0">All Countries</option>
+                                <option *ngFor="let country of countries" [value]="country.countryId">
+                                    {{country.name}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control"[(ngModel)]="stateId" (change)="onSelectState($event.target.value)">
+                                <option value="0">All States</option>
+                                <option *ngFor="let state of states" [value]="state.stateId">
+                                    {{ state.name }}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" [(ngModel)]="cityId" (change)="onSelectCity($event.target.value)">
+                                <option value="0">All Cities</option>
+                                <option *ngFor="let city of cities" [value]="city.cityId">
+                                    {{ city.name }}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" [(ngModel)]="categoryId" (change)="onSelectCategory($event.target.value)">
+                                <option value="0">All Categories</option>
+                                <option *ngFor="let category of categories" [value]="category.id">
+                                    {{ category.name }}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" [(ngModel)]="typeId" (change)="onSelectType($event.target.value)">
+                                <option value="0">All Types</option>
+                                <option *ngFor="let eventType of eventTypes" [value]="eventType.id">{{ eventType.name }}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div>
+                                <div class="form-group m-b-sm" id="data_2">
+                                    <label class="font-noraml pull-left m-t-sm m-r-sm btn-w-xs">From:</label>
+                                    <div class="input-group date">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input class="form-control input-date" [(ngModel)]="fromDate" (change)="getEvents()" type="date">
+                                    </div>
+                                </div>
+                                <div class="form-group m-b-sm" id="data_2">
+                                    <label class="font-noraml pull-left m-t-sm m-r-sm btn-w-xs">To:</label>
+                                    <div class="input-group date">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input class="form-control input-date" [(ngModel)]="toDate" (change)="getEvents()" type="date">
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <select class="form-control" [(ngModel)]="severityId" (change)="onSelectSeverity($event.target.value)">
+                                <option value="-1">All</option>
+                                <option value="0">Minor</option>
+                                <option value="1">Moderate</option>
+                                <option value="2">Severe</option>
+                                <option value="3">Extreme</option>
+                                <option value="4">N/A</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" [(ngModel)]="statusId"(change)="onSelectStatus($event.target.value)">
+                                <option value="-1">All</option>
+                                <option value="0">Warning</option>
+                                <option value="1">Hit</option>
+                                <option value="2">Started</option>
+                                <option value="3">Active</option>
+                                <option value="4">InActive</option>
+                                <option value="5">Contained</option>
+                                <option value="6">Closed</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" [(ngModel)]="alert"(change)="onSelectAlert($event.target.value)">
+                                <option value="null">All</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th class="vertical-middle">Event ID</th>
+                <th class="vertical-middle">Event Category</th>
+                <th class="vertical-middle">Event Type</th>
+                <th class="vertical-middle">Start Date</th>
+                <th class="vertical-middle">Last Updated</th>
+                <th class="vertical-middle">Event Title</th>
+                <th class="vertical-middle">Event Country</th>
+                <th class="vertical-middle">State</th>
+                <th class="vertical-middle">City</th>
+                <th class="vertical-middle">Severity</th>
+                <th class="vertical-middle">Status</th>
+                <th class="vertical-middle" colspan="4">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let event of events | paginate: {itemsPerPage: pageSize, currentPage: currentPage, totalItems: total }">
+                <td>
+                    <small>{{event.id}}</small>
+                    </td>
+                <td>{{event.category}}</td>
+                <td>{{event.type}}</td>
+                <td>{{event.startDate| date: 'dd/MM/yyyy'}}</td>
+                <td>{{event.lastUpdated| date: 'dd/MM/yyyy'}}</td>
+                <td>{{event.title}}</td>
+                <td>{{event.country}}</td>
+                <td>{{event.state}}</td>
+                <td>{{event.city}}</td>
+                <td>{{event.severity}}</td>
+                <td>{{event.status}}</td>
+                <td>
+                    <a *ngIf="!(event.status=='Closed' || event.status=='Inactive' || event.status=='100% Contained')"[routerLink]="['single',event.id,true]" class="text-underline">Update</a>
+                    <a *ngIf="event.status=='Closed' || event.status=='Inactive' || event.status=='100% Contained'"  class="disabled">Update</a>
+                </td>
+                <td>
+                    <a [routerLink]="['timeline',event.id]"class="text-underline">View Timeline</a>
+                </td>
+                <td>
+                    <a *ngIf="event.status!='Closed'" [routerLink]="['close',event.id]" class="text-underline">Close</a>
+                    <a *ngIf="event.status=='Closed'" class="disabled">Close</a>
+                </td>
+                <td>
+                    <a class="text-underline" (click)="deleteEvent(event)">Delete</a>
+                    <!-- <button (click)="deleteEvent(event)">x</button> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <pagination-controls (pageChange)="getPagedEvents($event)"></pagination-controls> -->
+    <div class="has-text-centered">
+        <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+        <pagination-controls (pageChange)="getEvents($event)"></pagination-controls>
+    </div>
+
+</div>

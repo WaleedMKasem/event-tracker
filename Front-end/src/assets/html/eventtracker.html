@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Z2DATA | Dashboard</title>
+
+    <!-- / M A I N L Y   S T Y L E S \ -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="css/animate.css" rel="stylesheet">
+
+    <!-- / T A B L E \ -->
+        <!-- Static Tables -->
+        <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+
+        <!-- Data Tables -->
+        <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+
+        <!-- Foo Table -->
+        <link href="css/plugins/footable/footable.core.css" rel="stylesheet">
+
+        <!-- jqGrid Table -->
+        <link href="css/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+        <link href="css/plugins/jqGrid/ui.jqgrid.css" rel="stylesheet">
+
+
+    <!-- / F O R M S \ -->
+        <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+        <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+        <link href="css/plugins/select2/select2.min.css" rel="stylesheet">
+
+    <!-- / C H A R T S \ -->
+        <!-- Gritter -->
+        <link href="js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+
+        <!-- c3 Charts -->
+        <link href="css/plugins/c3/c3.min.css" rel="stylesheet">
+
+        <!-- Morris -->
+        <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+
+        <!-- Chartist -->
+        <link href="css/plugins/chartist/chartist.min.css" rel="stylesheet">
+
+    <!-- / F O R M S \ -->
+
+         <link href="css/plugins/select2/select2.min.css" rel="stylesheet">
+
+    <!-- / C U S T O M \ -->
+        <!-- Style -->
+        <link href="css/plugins/timeline/timeline.css" rel="stylesheet">
+        <link href="css/z2.css" rel="stylesheet">
+        <!-- Favicon -->
+        <link rel="icon" href="images/favicon.png">
+
+    <!-- / M A I N L Y   S C R I P T S \ -->
+        <!-- Mainly scripts -->
+        <script src="js/jquery-2.1.1.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <!-- Auto Complete -->
+        <script src="supplychain/samples/go.js"></script>
+        <script src="js/typeahead.bundle.js"></script>
+        <script>
+            // #top-search
+            $(document).ready(function () {
+                var partlist = new Bloodhound({
+                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace("val"),
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    limit: 10,
+                    remote: '../company2.ashx?q=%QUERY'
+
+                });
+
+                partlist.initialize();
+                $('#top-search').typeahead(null, {
+                    name: 'partno',
+                    displayKey: 'pn',
+                    source: partlist.ttAdapter(),
+                    templates: {
+                        suggestion: function (partno) {
+                            return '<b><a href="' + partno.url + '"><span>' + partno.pn + '' +
+                                     '</span><span class="type typePart">' + partno.type + '</span></a></b>';
+                        }
+                    }
+                }).bind("typeahead:selected", function (evt, data) {
+
+                    window.location = data.url;
+                });
+
+                $('.twitter-typeahead').css('display', 'inline');
+                $('.twitter-typeahead').css('position', 'static');
+                $('.twitter-typeahead').css('direction', 'ltr');
+            })
+        </script>
+        <style type="text/css">
+            .highcharts-tooltip h3 {
+                margin: 0.3em 0;
+            }
+        </style>
+
+</head>
+
+<body class="top-navigation">
+
+    <div id="wrapper">
+        <div id="page-wrapper" class="white-bg">
+        <div class="row border-bottomhd gray-bg">
+            <nav class="navbar navbar-static-top" style="padding: 0 50px;" role="navigation">
+                <div class="navbar-header">
+                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                        <i class="fa fa-reorder"></i>
+                    </button>
+                    <a href="#" class="navbar-brand">
+                        <img src="images/logo.png" class="img-responsive pull-left" alt="Z2DATA | Dashboard">
+                        <span class="h6 font-noraml text-uppercase m-t-none m-l-xs text-muted pull-left">SUPPLY<br>CHAIN</span>
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="index8.html">Browse <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li>
+                            <a href="riskmanager.html">Risk Manager</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="navbar-header navbar-form-custom">
+                        <form role="search" class="form-inline" action="#">
+                            <div class="form-group">
+                                <div class="input-group">                                
+                                    <div class="input-group-btn" id="scopeOptionDiv">
+                                        <button data-toggle="dropdown" class="btn btn-white btn-w-md dropdown-toggle" type="button">All <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">All</a></li>
+                                            <li><a href="#">Part Number</a></li>
+                                            <li><a href="#">Companies</a></li>
+                                            <li><a href="#">Family</a></li>
+                                        </ul>
+                                    </div>
+                                    <input type="text" data-provide="typeahead" name="top-search" placeholder="Search" class="form-control" />
+                                    <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                                
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-nav top-links navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info navuser" data-toggle="dropdown" href="#">
+                                <i class="fa fa-bell"></i>  <span class="label label-danger">8</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-alerts">
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <i class="fa fa-envelope-o fa-fw"></i> You have 16 messages
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="text-center link-block">
+                                        <a href="#">
+                                            <strong>See All Alerts</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle navuser" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                 John Doe <span class="caret"></span>
+                              </a>
+                              <ul class="dropdown-menu">
+                                    <li><a href="#"><i class="fa fa-gear fa-fw"></i>  Settings</a></li>
+                                    <li><a href="#"><i class="fa fa-sign-out fa-fw"></i>  Logout</a></li>
+                              </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav><!-- /Navbar -->
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="">
+                <div class="modal inmodal " id="ViewTimeline" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" style="width: 1111px;">
+                        <div class="modal-content animated fadeIn">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title text-uppercase">View Timeline</h4>
+                            </div>
+                            <div class="modal-body" style="background: #fff;">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped">
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="vertical-middle" width="45%">Event ID</th>
+                                                        <td>USA-123</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="vertical-middle">Event Category</th>
+                                                        <td>Natural Disaster</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="vertical-middle">Event Type</th>
+                                                        <td>Wildfires</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>                                          
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="timelinez">
+                                            <div class="entryz">
+                                                <div class="titlez">
+                                                  <p class="m-t-sm">27 Nov</p>
+                                                  <h3>2017</h3>
+                                                </div>
+                                                <div class="bodyz">
+                                                  <h3>Event Title (Warning)</h3>
+                                                  <p class="m-b-xxs">
+                                                    California, USA
+                                                  </p>
+                                                  <p class="m-b-xxs">
+                                                    Moderate
+                                                  </p>
+                                                  <p class="m-b-xxs">
+                                                    Associated Disasters: 
+                                                  </p>
+                                                  <p class="m-b-xxs">
+                                                    <a data-toggle="collapse" data-parent="#Sources" aria-expanded="true" href="#collapseSources" id="MoreFeatures" class="text-underline">View Sources</a>  |  
+                                                    <a href="eventtrackeradde.html" class="text-underline">Edit</a>  |  
+                                                    <a href="#" class="text-underline">Delete</a>  |  
+                                                    <a data-toggle="modal" data-target="#EViewAllFeatures" href="#" class="text-underline">View All Features</a>
+                                                  </p>
+                                                  <p class="m-b-xxs panel-collapse collapse" id="collapseSources" aria-expanded="true">
+                                                    Sources:   
+                                                    <a href="#" class="text-underline">BBC</a>  |  
+                                                    <a href="#" class="text-underline">CNN</a>  |  
+                                                    <a href="#" class="text-underline">USA Today</a>
+                                                  </p>
+                                                </div>
+                                            </div>
+                                            <div class="entryz">
+                                                <div class="titlez">
+                                                  <p class="m-t-sm">27 Nov</p>
+                                                  <h3>2017</h3>
+                                                </div>
+                                                <div class="bodyz">
+                                                  <h3>Event Title (Warning)</h3>
+                                                  <p class="m-b-xxs">
+                                                    California, USA
+                                                  </p>
+                                                  <p class="m-b-xxs">
+                                                    Moderate
+                                                  </p>
+                                                  <p class="m-b-xxs">
+                                                    Associated Disasters: 
+                                                  </p>
+                                                  <p class="m-b-xxs">
+                                                    <a data-toggle="collapse" data-parent="#Sources2" aria-expanded="true" href="#collapseSources2" id="MoreFeatures2" class="text-underline">View Sources</a>  |  
+                                                    <a href="eventtrackeradde.html" class="text-underline">Edit</a>  |  
+                                                    <a href="#" class="text-underline">Delete</a>  |  
+                                                    <a data-toggle="modal" data-target="#EViewAllFeatures" href="#" class="text-underline">View All Features</a>
+                                                  </p>
+                                                  <p class="m-b-xxs panel-collapse collapse" id="collapseSources2" aria-expanded="true">
+                                                    Sources:   
+                                                    <a href="#" class="text-underline">BBC</a>  |  
+                                                    <a href="#" class="text-underline">CNN</a>  |  
+                                                    <a href="#" class="text-underline">USA Today</a>
+                                                  </p>
+                                                </div>
+                                            </div>
+                                            <div class="entryz">
+                                                <div class="titlez">
+                                                  <p class="m-t-sm">27 Nov</p>
+                                                  <h3>2017</h3>
+                                                </div>
+                                                <div class="bodyz">
+                                                  <h3>Event Title (Warning)</h3>
+                                                  <p class="m-b-xxs">
+                                                    California, USA
+                                                  </p>
+                                                  <p class="m-b-xxs">
+                                                    Moderate
+                                                  </p>
+                                                  <p class="m-b-xxs">
+                                                    Associated Disasters: 
+                                                  </p>
+                                                  <p class="m-b-xxs">
+                                                    <a data-toggle="collapse" data-parent="#Sources3" aria-expanded="true" href="#collapseSources3" id="MoreFeatures3" class="text-underline">View Sources</a>  |  
+                                                    <a href="eventtrackeradde.html" class="text-underline">Edit</a>  |  
+                                                    <a href="#" class="text-underline">Delete</a>  |  
+                                                    <a data-toggle="modal" data-target="#EViewAllFeatures" href="#" class="text-underline">View All Features</a>
+                                                  </p>
+                                                  <p class="m-b-xxs panel-collapse collapse" id="collapseSources3" aria-expanded="true">
+                                                    Sources:   
+                                                    <a href="#" class="text-underline">BBC</a>  |  
+                                                    <a href="#" class="text-underline">CNN</a>  |  
+                                                    <a href="#" class="text-underline">USA Today</a>
+                                                  </p>
+                                                </div>
+                                            </div>
+                                            <div class="entryz">
+                                                <div class="titlez">
+                                                  <p class="m-t-sm">27 Nov</p>
+                                                  <h3>2017</h3>
+                                                </div>
+                                                <div class="bodyz">
+                                                  <h3>Event Title (Warning)</h3>
+                                                  <p class="m-b-xxs">
+                                                    California, USA
+                                                  </p>
+                                                  <p class="m-b-xxs">
+                                                    Moderate
+                                                  </p>
+                                                  <p class="m-b-xxs">
+                                                    Associated Disasters: 
+                                                  </p>
+                                                  <p class="m-b-xxs">
+                                                    <a data-toggle="collapse" data-parent="#Sources4" aria-expanded="true" href="#collapseSources4" id="MoreFeatures4" class="text-underline">View Sources</a>  |  
+                                                    <a href="eventtrackeradde.html" class="text-underline">Edit</a>  |  
+                                                    <a href="#" class="text-underline">Delete</a>  |  
+                                                    <a data-toggle="modal" data-target="#EViewAllFeatures" href="#" class="text-underline">View All Features</a>
+                                                  </p>
+                                                  <p class="m-b-xxs panel-collapse collapse" id="collapseSources4" aria-expanded="true">
+                                                    Sources:   
+                                                    <a href="#" class="text-underline">BBC</a>  |  
+                                                    <a href="#" class="text-underline">CNN</a>  |  
+                                                    <a href="#" class="text-underline">USA Today</a>
+                                                  </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success pull-right">Update</button>
+                                <button type="button" class="btn btn-white pull-left" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal inmodal " id="EViewAllFeatures" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" style="width: 1111px;">
+                        <div class="modal-content animated fadeIn">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title text-uppercase">Event ID: USA-123</h4>
+                            </div>
+                            <div class="modal-body" style="background: #fff;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="vertical-middle text-center">Feature</th>
+                                                        <th class="vertical-middle text-center">Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Event Category</td>
+                                                        <td>Natural Disaster</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Event Type</td>
+                                                        <td>Cyclone</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Date</td>
+                                                        <td>43070</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Event Title</td>
+                                                        <td>Cyclone Ockhi Kills at Least 12 in India; Dozens of Fishermen Rescued</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Event Desc</td>
+                                                        <td>Cyclone Ockhi Kills at Least 12 in India; Dozens of Fishermen Rescued</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Event URL</td>
+                                                        <td>https://www.wunderground.com/news/2017-12-01-cyclone-ockhi-india-impacts</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Source Name</td>
+                                                        <td>Wunderground</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Magnitude Value</td>
+                                                        <td>120</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Magnitude Scale</td>
+                                                        <td>mph</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Population Affected</td>
+                                                        <td>2000000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Deaths</td>
+                                                        <td>12</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Insured Losses</td>
+                                                        <td>50</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Missing</td>
+                                                        <td>7</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Country</td>
+                                                        <td>India</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>State</td>
+                                                        <td>Tamil Nadu</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>City</td>
+                                                        <td>N/A</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Severity</td>
+                                                        <td>Moderate</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Radius</td>
+                                                        <td>80000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Lat</td>
+                                                        <td>11.127122999999999</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Long</td>
+                                                        <td>78.656893999999994</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Status</td>
+                                                        <td>Active</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Associated Event Category </td>
+                                                        <td>Natural Disaster</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Associated Event Type</td>
+                                                        <td>Flood</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Severity</td>
+                                                        <td>Minor</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Radius</td>
+                                                        <td>20000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Lat</td>
+                                                        <td>11.127122999999999</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Long</td>
+                                                        <td>78.656893999999994</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>                                          
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="vertical-middle text-center" colspan="5"><a href="#" class="text-underline">Affected Suppliers</a></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="font-bold">Company Name</td>
+                                                        <td class="font-bold">Location Type</td>
+                                                        <td class="font-bold">Disaster Type</td>
+                                                        <td class="font-bold">Distance to Radius (km)</td>
+                                                        <td class="font-bold">Status</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3M company</td>
+                                                        <td>Data Center</td>
+                                                        <td>Cyclone</td>
+                                                        <td>2</td>
+                                                        <td>Affected</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Kemet Corp</td>
+                                                        <td>Fabrication</td>
+                                                        <td>Cyclone, Flood</td>
+                                                        <td>3</td>
+                                                        <td>Affected</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ASML</td>
+                                                        <td>Headquarter</td>
+                                                        <td>Cyclone</td>
+                                                        <td>20</td>
+                                                        <td>Near</td>
+                                                    </tr>
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="vertical-middle text-center" colspan="6"><a href="#" class="text-underline">Affected Airports</a></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="font-bold">Airport Name</td>
+                                                        <td class="font-bold">IATA</td>
+                                                        <td class="font-bold">Disaster Type</td>
+                                                        <td class="font-bold">Distance to Radius (km)</td>
+                                                        <td class="font-bold">Status</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Chennai International Airport</td>
+                                                        <td>MAA</td>
+                                                        <td>Cyclone</td>
+                                                        <td>2</td>
+                                                        <td>Affected</td>
+                                                    </tr>
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="vertical-middle text-center" colspan="5"><a href="#" class="text-underline">Affected Seaports</a></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="font-bold">Seaport Name</td>
+                                                        <td class="font-bold">UN/LOCODE</td>
+                                                        <td class="font-bold">Disaster Type</td>
+                                                        <td class="font-bold">Distance to Radius (km)</td>
+                                                        <td class="font-bold">Status</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Chennai Port</td>
+                                                        <td>IN MAA</td>
+                                                        <td>Cyclone</td>
+                                                        <td>2</td>
+                                                        <td>Affected</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success pull-right">Save</button>
+                                <button type="button" class="btn btn-white pull-left" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal inmodal " id="EVClose" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" style="width: 1111px;">
+                        <div class="modal-content animated fadeIn">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title text-uppercase">Close Event</h4>
+                            </div>
+                            <div class="modal-body" style="background: #fff;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="vertical-middle" width="30%">Feature</th>
+                                                        <th class="vertical-middle">Type</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Date</td>
+                                                        <td>
+                                                            <div>
+                                                                <label class="font-noraml m-b-sm">
+                                                                   <input value="option2" id="inlineCheckbox2" type="checkbox">
+                                                                   Today
+                                                                </label>
+                                                            </div>
+                                                            <div>
+                                                                <div class="form-group m-b-sm" id="data_2">
+                                                                    <label class="font-noraml pull-left m-t-sm m-r-xs">Or: </label> 
+                                                                    <div class="input-group date">
+                                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input class="form-control" value="08/09/2014" type="text">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Notes</td>
+                                                        <td>
+                                                            <textarea placeholder="Enter Notes" class="form-control" type="text"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>                                          
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success pull-right">Save</button>
+                                <button type="button" class="btn btn-white pull-left" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-b-xs">
+                    <div class="col-md-12">
+                        <button class="btn btn-white pull-right m-l-sm" type="button">Clear Filters</button>
+                        <button class="btn btn-info pull-right m-l-sm" type="button">Apply Filters</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped text-center vertical-middle">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" colspan="3">Location</th>
+                                        <th class="text-center">Event Type</th>
+                                        <th class="text-center">Event Name</th>
+                                        <th class="text-center">Date From/To</th>
+                                        <th class="text-center">Severity</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Customer Alerted</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <select class="form-control" name="account">
+                                                <option>Select Country</option>
+                                                <option>Select Country</option>
+                                                <option>Select Country</option>
+                                                <option>Select Country</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control" name="account">
+                                                <option>Select State</option>
+                                                <option>Select State</option>
+                                                <option>Select State</option>
+                                                <option>Select State</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control" name="account">
+                                                <option>Select City</option>
+                                                <option>Select City</option>
+                                                <option>Select City</option>
+                                                <option>Select City</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control" name="account">
+                                                <option>Natural Disaster</option>
+                                                <option>Disease</option>
+                                                <option>Aviation</option>
+                                                <option>Incidents</option>
+                                                <option>Hazmat</option>
+                                                <option>Human Trafficking</option>
+                                                <option>Food</option>
+                                                <option>Political</option>
+                                            </select> 
+                                        </td>
+                                        <td>
+                                            <select class="form-control" name="account">
+                                                <option>Earthquake</option>
+                                                <option>Wildfires</option>
+                                                <option>Flood</option>
+                                                <option>Landslide</option>
+                                                <option>Zika</option>
+                                                <option>Plane Crash</option>
+                                                <option>Explosion</option>
+                                                <option>Gas Leak</option>
+                                            </select> 
+                                        </td>
+                                        <td>
+                                            <div class="m-sm">
+                                                <div class="form-group m-b-sm" id="data_2">
+                                                    <label class="font-noraml pull-left m-t-sm m-r-sm btn-w-xs">From:</label>
+                                                    <div class="input-group date">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input class="form-control" value="08/09/2014" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group m-b-sm" id="data_2">
+                                                    <label class="font-noraml pull-left m-t-sm m-r-sm btn-w-xs">To:</label>
+                                                    <div class="input-group date">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input class="form-control" value="08/09/2017" type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <select class="form-control" name="account">
+                                                <option>Minor</option>
+                                                <option>Moderate</option>
+                                                <option>Severe</option>
+                                                <option>Extreme</option>
+                                                <option>N/A</option>
+                                            </select>                                                                                         
+                                        </td>
+                                        <td>
+                                            <select class="form-control" name="account">
+                                                <option>Started</option>
+                                                <option>Active</option>
+                                                <option>In-Active</option>
+                                                <option>Closed</option>
+                                                <option>Contained</option>
+                                            </select> 
+                                        </td>
+                                        <td>
+                                            <select class="form-control" name="account">
+                                                <option>Yes</option>
+                                                <option>No</option>
+                                            </select> 
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-b-xs">
+                    <div class="col-md-6">
+                        <a data-toggle="modal" href="#" data-target="#AttachFilestoEvent" class="btn btn-info">Attach Files to Event </a>
+                        <div class="modal inmodal " id="AttachFilestoEvent" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" style="width: 1111px;">
+                                <div class="modal-content animated fadeIn">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                        <h4 class="modal-title text-uppercase">Attach File to Event</h4>
+                                    </div>
+                                    <div class="modal-body" style="background: #fff;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="vertical-middle" width="30%">Feature</th>
+                                                                <th class="vertical-middle">Type</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Select Country</td>
+                                                                <td>
+                                                                    <select class="form-control" name="account">
+                                                                        <option>Country</option>
+                                                                        <option>Country</option>
+                                                                        <option>Country</option>
+                                                                        <option>Country</option>
+                                                                    </select> 
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Select State</td>
+                                                                <td>
+                                                                    <select class="form-control" name="account">
+                                                                        <option>State</option>
+                                                                        <option>State</option>
+                                                                        <option>State</option>
+                                                                    </select> 
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Select City</td>
+                                                                <td>
+                                                                    <select class="form-control" name="account">
+                                                                        <option>City</option>
+                                                                        <option>City</option>
+                                                                        <option>City</option>
+                                                                    </select> 
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Select ID</td>
+                                                                <td>
+                                                                    <select class="form-control" name="account">
+                                                                        <option>ID</option>
+                                                                        <option>ID</option>
+                                                                        <option>ID</option>
+                                                                    </select> 
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Attach File(s)</td>
+                                                                <td>
+                                                                    <label title="Upload image file" for="inputImage" class="btn btn-success">
+                                                                        <input accept="image/*" name="file" id="inputImage" class="hide" type="file">
+                                                                        Attach File(s)
+                                                                    </label>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>                                          
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-success pull-right">Save</button>
+                                        <button type="button" class="btn btn-white pull-left" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="eventtrackeradde.html" class="btn btn-info pull-right">Add New Event</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="vertical-middle">Event ID</th>
+                                        <th class="vertical-middle">Event Type</th>
+                                        <th class="vertical-middle">Event Name</th>
+                                        <th class="vertical-middle">Start Date</th>
+                                        <th class="vertical-middle">Last Updated</th>
+                                        <th class="vertical-middle">Event Title</th>
+                                        <th class="vertical-middle">Event Country</th>
+                                        <th class="vertical-middle">State</th>
+                                        <th class="vertical-middle">City</th>
+                                        <th class="vertical-middle">Severity</th>
+                                        <th class="vertical-middle">Status</th>
+                                        <th class="vertical-middle" colspan="4">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>USA-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Wildfires</td>
+                                        <td>12-04-17</td>
+                                        <td>12-22-17</td>
+                                        <td>Massive Southern California wildfire now halfway contained</td>
+                                        <td>United States</td>
+                                        <td>California</td>
+                                        <td>N/A</td>
+                                        <td>Moderate</td>
+                                        <td>50% Contained </td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>IRN-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Earthquake</td>
+                                        <td>12-12-17</td>
+                                        <td>12-22-17</td>
+                                        <td>M 6.0 - 64km NNE of Kerman, Iran</td>
+                                        <td>Iran</td>
+                                        <td>Kerman</td>
+                                        <td>N/A</td>
+                                        <td>Severe</td>
+                                        <td>In-Active (Closed)</td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>THA-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Flood</td>
+                                        <td>12-21-17</td>
+                                        <td></td>
+                                        <td>Severe flooding hits Thailand's south</td>
+                                        <td>Thailand</td>
+                                        <td>N/A</td>
+                                        <td>Nakhon</td>
+                                        <td>Severe</td>
+                                        <td>Active</td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>USA-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Wildfires</td>
+                                        <td>12-04-17</td>
+                                        <td>12-22-17</td>
+                                        <td>Massive Southern California wildfire now halfway contained</td>
+                                        <td>United States</td>
+                                        <td>California</td>
+                                        <td>N/A</td>
+                                        <td>Moderate</td>
+                                        <td>50% Contained </td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>IRN-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Earthquake</td>
+                                        <td>12-12-17</td>
+                                        <td>12-22-17</td>
+                                        <td>M 6.0 - 64km NNE of Kerman, Iran</td>
+                                        <td>Iran</td>
+                                        <td>Kerman</td>
+                                        <td>N/A</td>
+                                        <td>Severe</td>
+                                        <td>In-Active (Closed)</td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>THA-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Flood</td>
+                                        <td>12-21-17</td>
+                                        <td></td>
+                                        <td>Severe flooding hits Thailand's south</td>
+                                        <td>Thailand</td>
+                                        <td>N/A</td>
+                                        <td>Nakhon</td>
+                                        <td>Severe</td>
+                                        <td>Active</td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>USA-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Wildfires</td>
+                                        <td>12-04-17</td>
+                                        <td>12-22-17</td>
+                                        <td>Massive Southern California wildfire now halfway contained</td>
+                                        <td>United States</td>
+                                        <td>California</td>
+                                        <td>N/A</td>
+                                        <td>Moderate</td>
+                                        <td>50% Contained </td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>IRN-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Earthquake</td>
+                                        <td>12-12-17</td>
+                                        <td>12-22-17</td>
+                                        <td>M 6.0 - 64km NNE of Kerman, Iran</td>
+                                        <td>Iran</td>
+                                        <td>Kerman</td>
+                                        <td>N/A</td>
+                                        <td>Severe</td>
+                                        <td>In-Active (Closed)</td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>THA-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Flood</td>
+                                        <td>12-21-17</td>
+                                        <td></td>
+                                        <td>Severe flooding hits Thailand's south</td>
+                                        <td>Thailand</td>
+                                        <td>N/A</td>
+                                        <td>Nakhon</td>
+                                        <td>Severe</td>
+                                        <td>Active</td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>USA-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Wildfires</td>
+                                        <td>12-04-17</td>
+                                        <td>12-22-17</td>
+                                        <td>Massive Southern California wildfire now halfway contained</td>
+                                        <td>United States</td>
+                                        <td>California</td>
+                                        <td>N/A</td>
+                                        <td>Moderate</td>
+                                        <td>50% Contained </td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>IRN-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Earthquake</td>
+                                        <td>12-12-17</td>
+                                        <td>12-22-17</td>
+                                        <td>M 6.0 - 64km NNE of Kerman, Iran</td>
+                                        <td>Iran</td>
+                                        <td>Kerman</td>
+                                        <td>N/A</td>
+                                        <td>Severe</td>
+                                        <td>In-Active (Closed)</td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>THA-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Flood</td>
+                                        <td>12-21-17</td>
+                                        <td></td>
+                                        <td>Severe flooding hits Thailand's south</td>
+                                        <td>Thailand</td>
+                                        <td>N/A</td>
+                                        <td>Nakhon</td>
+                                        <td>Severe</td>
+                                        <td>Active</td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>USA-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Wildfires</td>
+                                        <td>12-04-17</td>
+                                        <td>12-22-17</td>
+                                        <td>Massive Southern California wildfire now halfway contained</td>
+                                        <td>United States</td>
+                                        <td>California</td>
+                                        <td>N/A</td>
+                                        <td>Moderate</td>
+                                        <td>50% Contained </td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>IRN-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Earthquake</td>
+                                        <td>12-12-17</td>
+                                        <td>12-22-17</td>
+                                        <td>M 6.0 - 64km NNE of Kerman, Iran</td>
+                                        <td>Iran</td>
+                                        <td>Kerman</td>
+                                        <td>N/A</td>
+                                        <td>Severe</td>
+                                        <td>In-Active (Closed)</td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>THA-100</td>
+                                        <td>Natural Disaster</td>
+                                        <td>Flood</td>
+                                        <td>12-21-17</td>
+                                        <td></td>
+                                        <td>Severe flooding hits Thailand's south</td>
+                                        <td>Thailand</td>
+                                        <td>N/A</td>
+                                        <td>Nakhon</td>
+                                        <td>Severe</td>
+                                        <td>Active</td>
+                                        <td>
+                                            <a href="eventtrackeradde.html" class="text-underline">Update</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ViewTimeline" href="#" class="text-underline">View Timeline</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#EVClose" href="#" class="text-underline">Close</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-underline">Delete</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="m-t-sm m-b-none small">Displaying 1 to 50 of 72,613 Event </p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="btn-group pull-right m-b-sm">
+                            <button type="button" class="btn btn-white"><i class="fa fa-chevron-left"></i></button>
+                            <button class="btn btn-white  active">1</button>
+                            <button class="btn btn-white">2</button>
+                            <button class="btn btn-white">3</button>
+                            <button class="btn btn-white">4</button>
+                            <button type="button" class="btn btn-white"><i class="fa fa-chevron-right"></i> </button>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /Container -->
+
+        </div><!-- /Wrapper-Content -->
+
+        </div><!-- /#Page-Wrapper -->
+    </div><!-- /#Wrapper -->
+
+
+<!-- / T A B L E \ -->
+
+
+<!-- / F O R M S \ -->  
+    <!-- iCheck -->
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+         $('#sidebarCollapse').on('click', function () {
+             $('#sidebar').toggleClass('active');
+         });
+        });
+     </script>
+
+    <!-- Select2 -->
+    <script src="js/plugins/select2/select2.full.min.js"></script>
+    
+    <!-- Data picker -->
+    <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+        $('#data_2 .input-group.date').datepicker({
+                startView: 1,
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                autoclose: true,
+                format: "dd/mm/yyyy"
+        });
+    </script>
+    <!-- Sparkline -->
+    <script src="js/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script type="text/javascript">
+        $("#BOMGradeHistory").sparkline([46, 33, 86, 54, 73, 53, 12, 53, 23, 65, 23, 63, 53, 42, 34, 56, 76, 15, 54, 23, 44], {
+            type: 'line',
+            lineColor: '#80a6dc',
+            lineWidth: '2',
+            fillColor: '#f5f7fa',
+            width: '100%',
+            height: '60px'
+        });
+    </script>
+    <!-- Sparkline demo data -->
+    <script src="js/demo/sparkline-demo.js"></script>
+<!-- / C U S T O M \ -->
+    <!-- Toastr -->
+    <script src="js/plugins/toastr/toastr.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/z2.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,229 @@
+<div>
+    <div class="modal-dialog modal-lg" style="width: 1111px;">
+        <div class="modal-content animated fadeIn" *ngIf="event">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title text-uppercase">Event ID: {{event.id}}</h4>
+            </div>
+            <div class="modal-body" style="background: #fff;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="vertical-middle text-center">Feature</th>
+                                        <th class="vertical-middle text-center">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Event Category</td>
+                                        <td>{{event.details.category.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Event Type</td>
+                                        <td>{{event.details.type.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date</td>
+                                        <td>{{event.details.startDate | date:'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Event Title</td>
+                                        <td>{{event.details.title}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Event Desc</td>
+                                        <td>{{event.details.description}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Event URL</td>
+                                        <td><div *ngIf="event.details.sources">{{event.details.sources[0]?.url}}</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Source Name</td>
+                                        <td><div *ngIf="event.details.sources">{{event.details.sources[0]?.name}}</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Magnitude Value</td>
+                                        <td>{{event.features.value}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Magnitude Scale</td>
+                                        <td>{{getUnit(event.features.unit)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Population Affected</td>
+                                        <td>{{event.features.populationAffected}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Deaths</td>
+                                        <td>{{event.features.populationDeaths}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Insured Losses</td>
+                                        <td>{{event.features.insuredLosses}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Missing</td>
+                                        <td>{{event.features.populationMissing}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Damage (M $)</td>
+                                        <td>{{event.features.damageInMillionUsd}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Damage (Property)</td>
+                                        <td>{{event.features.damageInProperty}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Notes</td>
+                                        <td>{{event.features.notes}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Country</td>
+                                        <td>{{event.place.country.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>State</td>
+                                        <td>{{event.place.state.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>City</td>
+                                        <td>{{event.place.city.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Severity</td>
+                                        <td>{{getSeverity(event.details.severity)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Radius</td>
+                                        <td>Affected: {{event.effectRange.affectedRadius}} - Near: {{event.effectRange.nearRadius}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lat</td>
+                                        <td><div *ngIf="event.effectRange.location.coordinates">{{event.effectRange.location.coordinates[0]}}</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Long</td>
+                                        <td><div *ngIf="event.effectRange.location.coordinates">{{event.effectRange.location.coordinates[1]}}</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status</td>
+                                        <td>{{getStatus(event.details.status)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Associated Event Category </td>
+                                        <td>{{event.associatedEvent?.category?.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Associated Event Type</td>
+                                        <td>{{event.associatedEvent?.type?.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Severity</td>
+                                        <td>{{getSeverity(event.associatedEvent?.severity)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Radius</td>
+                                        <td>Affected: {{event.associatedEvent?.effectRange?.affectedRadius}} - Near: {{event.associatedEvent?.effectRange?.nearRadius}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lat</td>
+                                        <td><div *ngIf="event.associatedEvent.effectRange.location.coordinates">{{event.associatedEvent?.effectRange?.location?.coordinates[0]}}</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Long</td>
+                                        <td><div *ngIf="event.associatedEvent.effectRange.location.coordinates">{{event.associatedEvent?.effectRange?.location?.coordinates[1]}}</div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead *ngIf="companies">
+                                    <tr>
+                                        <th class="vertical-middle text-center" colspan="6"><a href="#" class="text-underline">Affected Suppliers ({{companies?.length}})</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="companies">
+                                    <tr>
+                                        <td class="font-bold">Company Name</td>
+                                        <td class="font-bold">Location Type</td>
+                                        <td class="font-bold">Disaster Type</td>
+                                        <td class="font-bold">Distance to Radius (km)</td>
+                                        <td class="font-bold">Status</td>
+                                        <td class="font-bold">Is Confirmed</td>
+                                    </tr>
+                                    <tr *ngFor="let company of companies">
+                                        <td>{{company.name}}</td>
+                                        <td>{{company.locationType}}</td>
+                                        <td><p>{{mapDesisters(company.disasterTypes)}} </p></td>
+                                        <!-- <td><p *ngFor="let type of company.disasterTypes">{{type.name}}, </p></td> -->
+                                        <td>{{company.distance}}</td>
+                                        <td>{{getEffect(company.status)}}</td>
+                                        <td>{{company.isConfirmed}}</td>
+                                    </tr>
+                                </tbody>
+                                <thead *ngIf="airports">
+                                    <tr>
+                                        <th class="vertical-middle text-center" colspan="6"><a href="#" class="text-underline">Affected Airports ({{airports?.length}})</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="airports">
+                                    <tr>
+                                        <td class="font-bold">Airport Name</td>
+                                        <td class="font-bold">IATA</td>
+                                        <td class="font-bold">Disaster Type</td>
+                                        <td class="font-bold">Distance to Radius (km)</td>
+                                        <td class="font-bold">Status</td>
+                                        <td class="font-bold">Is Confirmed</td>
+                                    </tr>
+                                    <tr *ngFor="let airport of airports">
+                                        <td>{{airport.name}}</td>
+                                        <td>{{airport.iata}}</td>
+                                        <td><p>{{mapDesisters(airport.disasterTypes)}} </p></td>
+                                        <td>{{airport.distance}}</td>
+                                        <td>{{getEffect(airport.status)}}</td>
+                                        <td>{{airport.isConfirmed}}</td>
+                                    </tr>
+                                </tbody>
+                                <thead *ngIf="seaports">
+                                    <tr>
+                                        <th class="vertical-middle text-center" colspan="6"><a href="#" class="text-underline">Affected Seaports ({{seaports?.length}})</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="seaports">
+                                    <tr>
+                                        <td class="font-bold">Seaport Name</td>
+                                        <td class="font-bold">UN/LOCODE</td>
+                                        <td class="font-bold">Disaster Type</td>
+                                        <td class="font-bold">Distance to Radius (km)</td>
+                                        <td class="font-bold">Status</td>
+                                        <td class="font-bold">Is Confirmed</td>
+                                    </tr>
+                                    <tr *ngFor="let seaport of seaports">
+                                        <td>{{seaport.name}}</td>
+                                        <td>{{seaport.locode}}</td>
+                                        <td><p>{{mapDesisters(seaport.disasterTypes)}} </p></td>
+                                        <td>{{seaport.distance}}</td>
+                                        <td>{{getEffect(seaport.status)}}</td>
+                                        <td>{{seaport.isConfirmed}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" [routerLink]="['/events/timeline',event.id]" class="btn btn-white pull-left" data-dismiss="modal">Back to timeline</button>
+            </div>
+        </div>
+    </div>
+</div>
